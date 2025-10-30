@@ -1,0 +1,1 @@
+{"version":3,"file":"ImpactRules.d.ts","sourceRoot":"","sources":["../../../../../src/services/ia/classification/rules/ImpactRules.ts"],"names":[],"mappings":"AAIA,qBAAa,WAAW;IACtB,OAAO,CAAC,gBAAgB,CAAmB;;IAM3C;;OAEG;IACH,YAAY,CAAC,IAAI,EAAE,MAAM,GAAG;QAC1B,WAAW,EAAE,MAAM,CAAC;QACpB,UAAU,EAAE,MAAM,CAAC;QACnB,eAAe,EAAE,MAAM,EAAE,CAAC;KAC3B;CA4EF"}

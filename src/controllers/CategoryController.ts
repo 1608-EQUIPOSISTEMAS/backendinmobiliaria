@@ -265,4 +265,57 @@ export class CategoryController {
       next(error);
     }
   };
+
+  // Alias para compatibilidad con rutas
+  getById = this.getCategoryById;
+  create = this.createCategory;
+  update = this.updateCategory;
+  delete = this.deleteCategory;
+
+  /**
+   * Obtener subcategorías de una categoría
+   * GET /api/categories/:id/subcategories
+   */
+  getSubcategories = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const categoryId = parseInt(req.params.id);
+
+      logger.info(`📂 Obteniendo subcategorías de la categoría ID: ${categoryId}`);
+
+      // Por ahora retornamos array vacío ya que no hay subcategorías en el esquema
+      const subcategories: any[] = [];
+
+      res.json(successResponse(subcategories, 'Subcategorías obtenidas'));
+    } catch (error: any) {
+      logger.error(`❌ Error al obtener subcategorías: ${error.message}`);
+      next(error);
+    }
+  };
+
+  /**
+   * Obtener estadísticas de una categoría
+   * GET /api/categories/:id/stats
+   */
+  getCategoryStats = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const categoryId = parseInt(req.params.id);
+
+      logger.info(`📊 Obteniendo estadísticas de la categoría ID: ${categoryId}`);
+
+      const stats = await this.repository.queryOne<any>(`
+        SELECT
+          COUNT(*) as total_tickets,
+          COUNT(CASE WHEN t.estado_id IN (1,2,3,4,8) THEN 1 END) as tickets_activos,
+          COUNT(CASE WHEN t.estado_id IN (5,6) THEN 1 END) as tickets_resueltos,
+          ROUND(AVG(TIMESTAMPDIFF(MINUTE, t.created_at, t.fecha_resolucion)), 0) as tiempo_promedio_resolucion
+        FROM tickets t
+        WHERE t.categoria_id = ?
+      `, [categoryId]);
+
+      res.json(successResponse(stats, 'Estadísticas obtenidas'));
+    } catch (error: any) {
+      logger.error(`❌ Error al obtener estadísticas: ${error.message}`);
+      next(error);
+    }
+  };
 }

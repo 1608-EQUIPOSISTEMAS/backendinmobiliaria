@@ -1,0 +1,1 @@
+{"version":3,"file":"index.d.ts","sourceRoot":"","sources":["../../src/middleware/index.ts"],"names":[],"mappings":"AACA,cAAc,oBAAoB,CAAC;AACnC,cAAc,wBAAwB,CAAC;AACvC,cAAc,mBAAmB,CAAC;AAClC,cAAc,yBAAyB,CAAC;AACxC,cAAc,yBAAyB,CAAC;AAGxC,OAAO,EAAE,cAAc,EAAE,MAAM,mBAAmB,CAAC;AACnD,OAAO,EAAE,oBAAoB,EAAE,MAAM,yBAAyB,CAAC;AAC/D,OAAO,EAAE,oBAAoB,EAAE,MAAM,yBAAyB,CAAC"}

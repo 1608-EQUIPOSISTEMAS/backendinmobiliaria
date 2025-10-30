@@ -21,3 +21,11 @@ export const strictLimiter = rateLimit({
   max: 10, // 10 solicitudes
   message: 'Límite de solicitudes excedido, intente en 1 minuto',
 });
+
+export const rateLimitStrict = strictLimiter;
+
+export const rateLimitModerate = rateLimit({
+  windowMs: 60 * 1000, // 1 minuto
+  max: 30, // 30 solicitudes
+  message: 'Límite de solicitudes moderado excedido, intente en 1 minuto',
+});
