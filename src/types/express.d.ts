@@ -3,10 +3,10 @@ import { TokenPayload } from '@utils/token.util';
 declare global {
   namespace Express {
     interface Request {
-      user?: {
-        id: number;
-        email: string;
-        rol_id: number;
+      user?: TokenPayload & {
+        roleId: number;
+        roleName?: string;
+        permissions?: string[];
       };
     }
   }
