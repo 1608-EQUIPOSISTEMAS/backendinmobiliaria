@@ -70,6 +70,17 @@ router.get(
 );
 
 /**
+ * @route   PATCH /api/users/profile
+ * @desc    Actualizar perfil propio
+ * @access  Private
+ */
+router.patch(
+  '/profile',
+  validate(updateProfileValidator),
+  userController.updateProfile
+);
+
+/**
  * @route   GET /api/users/:id
  * @desc    Obtener usuario por ID
  * @access  Private (usuarios.ver)
@@ -154,17 +165,6 @@ router.get(
   '/:id/stats',
   validateId('id'),
   userController.getUserStats
-);
-
-/**
- * @route   PATCH /api/users/profile
- * @desc    Actualizar perfil propio
- * @access  Private
- */
-router.patch(
-  '/profile',
-  validate(updateProfileValidator),
-  userController.updateProfile
 );
 
 export default router;
