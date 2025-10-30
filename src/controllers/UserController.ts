@@ -256,7 +256,7 @@ export class UserController {
       logger.info(`📊 Obteniendo estadísticas del usuario ${userId}`);
 
       const stats = await this.userRepository.queryOne<any>(`
-        SELECT 
+        SELECT
           COUNT(CASE WHEN t.estado_id IN (1,2,3,4,8) THEN 1 END) as tickets_activos,
           COUNT(CASE WHEN t.estado_id IN (5,6) THEN 1 END) as tickets_resueltos,
           COUNT(*) as total_tickets,
@@ -270,6 +270,133 @@ export class UserController {
       res.json(successResponse(stats, 'Estadísticas obtenidas'));
     } catch (error: any) {
       logger.error(`❌ Error al obtener estadísticas: ${error.message}`);
+      next(error);
+    }
+  };
+
+  // Alias para compatibilidad con rutas
+  getUserStats = this.getStats;
+
+  /**
+   * Obtener técnicos disponibles
+   * GET /api/users/technicians/available
+   */
+  getAvailableTechnicians = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      logger.info('👨‍💻 Obteniendo técnicos disponibles');
+
+      const [technicians] = await this.userRepository.query<any[]>(`
+        SELECT
+          u.id,
+          CONCAT(u.nombre, ' ', u.apellido) as nombre_completo,
+          u.email,
+          u.carga_actual,
+          u.max_tickets,
+          u.disponible,
+          u.especialidades,
+          a.nombre as area
+        FROM usuarios u
+        INNER JOIN areas a ON u.area_id = a.id
+        WHERE u.es_tecnico = TRUE
+          AND u.activo = TRUE
+          AND u.disponible = TRUE
+          AND u.carga_actual < u.max_tickets
+        ORDER BY u.carga_actual ASC, u.nombre ASC
+      `);
+
+      res.json(successResponse(technicians, 'Técnicos disponibles obtenidos'));
+    } catch (error: any) {
+      logger.error(`❌ Error al obtener técnicos disponibles: ${error.message}`);
+      next(error);
+    }
+  };
+
+  /**
+   * Actualizar perfil del usuario autenticado
+   * PATCH /api/users/profile
+   */
+  updateProfile = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const userId = (req as any).user?.id;
+
+      if (!userId) {
+        throw new AppError('Usuario no autenticado', 401);
+      }
+
+      const updateData = req.body;
+
+      logger.info(`✏️ Actualizando perfil del usuario: ${userId}`);
+
+      // No permitir cambiar rol o estado desde el perfil
+      delete updateData.rol_id;
+      delete updateData.activo;
+      delete updateData.es_tecnico;
+
+      await this.userRepository.update('usuarios', userId, updateData);
+      const user = await this.userRepository.findById('usuarios', userId);
+
+      // Remover password_hash
+      const { password_hash, ...userData } = user as any;
+
+      logger.info(`✅ Perfil actualizado: ${userId}`);
+
+      res.json(successResponse(userData, 'Perfil actualizado'));
+    } catch (error: any) {
+      logger.error(`❌ Error al actualizar perfil: ${error.message}`);
+      next(error);
+    }
+  };
+
+  /**
+   * Activar usuario
+   * POST /api/users/:id/activate
+   */
+  activate = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const userId = parseInt(req.params.id);
+
+      logger.info(`✅ Activando usuario ID: ${userId}`);
+
+      await this.userRepository.update('usuarios', userId, { activo: true });
+      const user = await this.userRepository.findById('usuarios', userId);
+
+      // Remover password_hash
+      const { password_hash, ...userData } = user as any;
+
+      logger.info(`✅ Usuario activado: ${userId}`);
+
+      res.json(successResponse(userData, 'Usuario activado'));
+    } catch (error: any) {
+      logger.error(`❌ Error al activar usuario: ${error.message}`);
+      next(error);
+    }
+  };
+
+  /**
+   * Obtener tickets de un usuario
+   * GET /api/users/:id/tickets
+   */
+  getUserTickets = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const userId = parseInt(req.params.id);
+      const page = req.query.page ? parseInt(req.query.page as string) : 1;
+      const limit = req.query.limit ? parseInt(req.query.limit as string) : 25;
+
+      logger.info(`🎫 Obteniendo tickets del usuario ${userId}`);
+
+      const result = await this.userRepository.paginate(
+        'tickets',
+        page,
+        limit,
+        '*',
+        'solicitante_id = ? OR tecnico_asignado_id = ?',
+        [userId, userId],
+        'created_at DESC'
+      );
+
+      res.json(successResponse(result, 'Tickets obtenidos'));
+    } catch (error: any) {
+      logger.error(`❌ Error al obtener tickets: ${error.message}`);
       next(error);
     }
   };

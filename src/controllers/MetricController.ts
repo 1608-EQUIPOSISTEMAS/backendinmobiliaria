@@ -247,4 +247,115 @@ export class MetricController {
       next(error);
     }
   };
+
+  // Alias para compatibilidad con rutas
+  listReports = this.getReports;
+
+  /**
+   * Obtener alertas SLA
+   * GET /api/metrics/sla-alerts
+   */
+  getSlaAlerts = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      logger.info('⚠️ Obteniendo alertas SLA');
+
+      // TODO: Implementar lógica de alertas SLA
+      const alerts: any[] = [];
+
+      res.json(successResponse(alerts, 'Alertas SLA obtenidas'));
+    } catch (error: any) {
+      logger.error(`❌ Error al obtener alertas SLA: ${error.message}`);
+      next(error);
+    }
+  };
+
+  /**
+   * Estadísticas por técnico por ID
+   * GET /api/metrics/technicians/:id/stats
+   */
+  getTechnicianStatsById = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const tecnicoId = parseInt(req.params.id);
+      const fechaInicio = req.query.fecha_inicio as string;
+      const fechaFin = req.query.fecha_fin as string;
+
+      logger.info(`👨‍💻 Obteniendo estadísticas del técnico ${tecnicoId}`);
+
+      const stats = await this.metricService.getTechnicianMetrics(
+        tecnicoId,
+        fechaInicio,
+        fechaFin
+      );
+
+      res.json(successResponse(stats, 'Estadísticas del técnico'));
+    } catch (error: any) {
+      logger.error(`❌ Error al obtener estadísticas: ${error.message}`);
+      next(error);
+    }
+  };
+
+  /**
+   * Métricas de performance
+   * GET /api/metrics/performance
+   */
+  getPerformance = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const fechaInicio = req.query.fecha_inicio as string;
+      const fechaFin = req.query.fecha_fin as string;
+
+      logger.info('📈 Obteniendo métricas de performance');
+
+      // TODO: Implementar métricas de performance
+      const performance = {
+        ticket_resolution_time: 0,
+        response_time: 0,
+        satisfaction_rate: 0,
+      };
+
+      res.json(successResponse(performance, 'Métricas de performance'));
+    } catch (error: any) {
+      logger.error(`❌ Error al obtener performance: ${error.message}`);
+      next(error);
+    }
+  };
+
+  /**
+   * Tendencias
+   * GET /api/metrics/trends
+   */
+  getTrends = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const fechaInicio = req.query.fecha_inicio as string;
+      const fechaFin = req.query.fecha_fin as string;
+
+      logger.info('📊 Obteniendo tendencias');
+
+      // TODO: Implementar tendencias
+      const trends: any[] = [];
+
+      res.json(successResponse(trends, 'Tendencias obtenidas'));
+    } catch (error: any) {
+      logger.error(`❌ Error al obtener tendencias: ${error.message}`);
+      next(error);
+    }
+  };
+
+  /**
+   * Obtener un reporte específico
+   * GET /api/metrics/reports/:id
+   */
+  getReport = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const reportId = parseInt(req.params.id);
+
+      logger.info(`📄 Obteniendo reporte ${reportId}`);
+
+      const report = await this.reportService.exportToJson(reportId);
+
+      res.json(successResponse(report, 'Reporte obtenido'));
+    } catch (error: any) {
+      logger.error(`❌ Error al obtener reporte: ${error.message}`);
+      next(error);
+    }
+  };
 }

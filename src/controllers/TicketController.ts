@@ -261,4 +261,141 @@ export class TicketController {
       next(error);
     }
   };
+
+  // Alias para compatibilidad con rutas
+  getSimilar = this.findSimilar;
+
+  /**
+   * Obtener estadísticas de tickets
+   * GET /api/tickets/stats
+   */
+  getStats = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      logger.info('📊 Obteniendo estadísticas de tickets');
+
+      // TODO: Implementar estadísticas de tickets
+      const stats = {
+        total: 0,
+        activos: 0,
+        resueltos: 0,
+        cerrados: 0,
+      };
+
+      res.json(successResponse(stats, 'Estadísticas obtenidas'));
+    } catch (error: any) {
+      logger.error(`❌ Error al obtener estadísticas: ${error.message}`);
+      next(error);
+    }
+  };
+
+  /**
+   * Tomar ticket (asignarse a sí mismo)
+   * POST /api/tickets/:id/take
+   */
+  takeTicket = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const ticketId = parseInt(req.params.id);
+      const userId = (req as any).user.id;
+
+      logger.info(`👤 Técnico ${userId} tomando ticket ${ticketId}`);
+
+      const ticket = await this.ticketService.assignTicket(ticketId, userId, userId);
+
+      logger.info(`✅ Ticket ${ticketId} tomado por técnico ${userId}`);
+
+      res.json(successResponse(ticket, 'Ticket asignado exitosamente'));
+    } catch (error: any) {
+      logger.error(`❌ Error al tomar ticket: ${error.message}`);
+      next(error);
+    }
+  };
+
+  /**
+   * Obtener comentarios del ticket
+   * GET /api/tickets/:id/comments
+   */
+  getComments = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const ticketId = parseInt(req.params.id);
+
+      logger.info(`💬 Obteniendo comentarios del ticket ${ticketId}`);
+
+      const comments = await this.ticketService.addComment(ticketId, {});
+
+      res.json(successResponse(comments, 'Comentarios obtenidos'));
+    } catch (error: any) {
+      logger.error(`❌ Error al obtener comentarios: ${error.message}`);
+      next(error);
+    }
+  };
+
+  /**
+   * Resolver ticket
+   * POST /api/tickets/:id/resolve
+   */
+  resolve = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const ticketId = parseInt(req.params.id);
+      const userId = (req as any).user.id;
+      const { solucion } = req.body;
+
+      logger.info(`✅ Resolviendo ticket ${ticketId}`);
+
+      // Estado resuelto (asumiendo estado_id = 5)
+      const ticket = await this.ticketService.changeStatus(ticketId, 5, userId);
+
+      logger.info(`✅ Ticket resuelto: ${ticketId}`);
+
+      res.json(successResponse(ticket, 'Ticket resuelto'));
+    } catch (error: any) {
+      logger.error(`❌ Error al resolver ticket: ${error.message}`);
+      next(error);
+    }
+  };
+
+  /**
+   * Cerrar ticket
+   * POST /api/tickets/:id/close
+   */
+  close = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const ticketId = parseInt(req.params.id);
+      const userId = (req as any).user.id;
+
+      logger.info(`🔒 Cerrando ticket ${ticketId}`);
+
+      // Estado cerrado (asumiendo estado_id = 6)
+      const ticket = await this.ticketService.changeStatus(ticketId, 6, userId);
+
+      logger.info(`✅ Ticket cerrado: ${ticketId}`);
+
+      res.json(successResponse(ticket, 'Ticket cerrado'));
+    } catch (error: any) {
+      logger.error(`❌ Error al cerrar ticket: ${error.message}`);
+      next(error);
+    }
+  };
+
+  /**
+   * Reabrir ticket
+   * POST /api/tickets/:id/reopen
+   */
+  reopen = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const ticketId = parseInt(req.params.id);
+      const userId = (req as any).user.id;
+
+      logger.info(`🔓 Reabriendo ticket ${ticketId}`);
+
+      // Estado abierto (asumiendo estado_id = 1)
+      const ticket = await this.ticketService.changeStatus(ticketId, 1, userId);
+
+      logger.info(`✅ Ticket reabierto: ${ticketId}`);
+
+      res.json(successResponse(ticket, 'Ticket reabierto'));
+    } catch (error: any) {
+      logger.error(`❌ Error al reabrir ticket: ${error.message}`);
+      next(error);
+    }
+  };
 }

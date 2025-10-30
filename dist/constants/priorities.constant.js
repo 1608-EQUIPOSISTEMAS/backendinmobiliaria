@@ -1,0 +1,48 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.PRIORITY_MATRIX = exports.IMPACT_LEVELS = exports.URGENCY_LEVELS = exports.PRIORITY_NAMES = exports.PRIORITY_LEVELS = void 0;
+var PRIORITY_LEVELS;
+(function (PRIORITY_LEVELS) {
+    PRIORITY_LEVELS[PRIORITY_LEVELS["CRITICA"] = 1] = "CRITICA";
+    PRIORITY_LEVELS[PRIORITY_LEVELS["ALTA"] = 2] = "ALTA";
+    PRIORITY_LEVELS[PRIORITY_LEVELS["MEDIA"] = 3] = "MEDIA";
+    PRIORITY_LEVELS[PRIORITY_LEVELS["BAJA"] = 4] = "BAJA";
+})(PRIORITY_LEVELS || (exports.PRIORITY_LEVELS = PRIORITY_LEVELS = {}));
+exports.PRIORITY_NAMES = {
+    [PRIORITY_LEVELS.CRITICA]: 'Crítica',
+    [PRIORITY_LEVELS.ALTA]: 'Alta',
+    [PRIORITY_LEVELS.MEDIA]: 'Media',
+    [PRIORITY_LEVELS.BAJA]: 'Baja',
+};
+exports.URGENCY_LEVELS = {
+    CRITICA: 1,
+    ALTA: 2,
+    MEDIA: 3,
+    BAJA: 4,
+};
+exports.IMPACT_LEVELS = {
+    CRITICO: 1,
+    ALTO: 2,
+    MEDIO: 3,
+    BAJO: 4,
+};
+// Matriz de prioridad: urgencia x impacto
+exports.PRIORITY_MATRIX = {
+    '1-1': PRIORITY_LEVELS.CRITICA,
+    '1-2': PRIORITY_LEVELS.CRITICA,
+    '1-3': PRIORITY_LEVELS.ALTA,
+    '1-4': PRIORITY_LEVELS.ALTA,
+    '2-1': PRIORITY_LEVELS.CRITICA,
+    '2-2': PRIORITY_LEVELS.ALTA,
+    '2-3': PRIORITY_LEVELS.ALTA,
+    '2-4': PRIORITY_LEVELS.MEDIA,
+    '3-1': PRIORITY_LEVELS.ALTA,
+    '3-2': PRIORITY_LEVELS.ALTA,
+    '3-3': PRIORITY_LEVELS.MEDIA,
+    '3-4': PRIORITY_LEVELS.MEDIA,
+    '4-1': PRIORITY_LEVELS.ALTA,
+    '4-2': PRIORITY_LEVELS.MEDIA,
+    '4-3': PRIORITY_LEVELS.MEDIA,
+    '4-4': PRIORITY_LEVELS.BAJA,
+};
+//# sourceMappingURL=priorities.constant.js.map

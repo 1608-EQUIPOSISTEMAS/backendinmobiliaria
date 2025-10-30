@@ -267,4 +267,40 @@ export class CommentController {
       next(error);
     }
   };
+
+  // Alias para compatibilidad con rutas
+  getByTicket = this.list;
+
+  /**
+   * Obtener comentario por ID
+   */
+  getById = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const commentId = parseInt(req.params.id);
+
+      logger.info(`🔍 Obteniendo comentario ID: ${commentId}`);
+
+      const [comment] = await this.repository.query<any[]>(`
+        SELECT
+          tc.*,
+          CONCAT(u.nombre, ' ', u.apellido) as usuario_nombre,
+          u.email as usuario_email,
+          u.avatar_url as usuario_avatar,
+          r.nombre as usuario_rol
+        FROM ticket_comentarios tc
+        INNER JOIN usuarios u ON tc.usuario_id = u.id
+        INNER JOIN roles r ON u.rol_id = r.id
+        WHERE tc.id = ?
+      `, [commentId]);
+
+      if (!comment || comment.length === 0) {
+        throw new AppError('Comentario no encontrado', 404);
+      }
+
+      res.json(successResponse(comment[0], 'Comentario obtenido'));
+    } catch (error: any) {
+      logger.error(`❌ Error al obtener comentario: ${error.message}`);
+      next(error);
+    }
+  };
 }
