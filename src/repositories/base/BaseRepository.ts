@@ -53,10 +53,10 @@ export class BaseRepository<T> {
     return result.insertId;
   }
 
-  public async update(
+public async update(
     table: string,
     id: number,
-    data: Partial<T>
+    data: Partial<T> | Record<string, any>
   ): Promise<boolean> {
     const keys = Object.keys(data);
     const values = Object.values(data);

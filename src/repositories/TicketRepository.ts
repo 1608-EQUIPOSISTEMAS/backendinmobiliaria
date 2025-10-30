@@ -1,197 +1,57 @@
-import { BaseRepository } from './base/BaseRepository';
-import { ITicket, ICreateTicket, IUpdateTicket, ITicketFilters } from '@interfaces/ITicket';
-import { HashUtil } from '@utils/hash.util';
+import { BaseRepository } from '@repositories/base/BaseRepository';
+import { RowDataPacket } from 'mysql2/promise';
 
-export class TicketRepository extends BaseRepository<ITicket> {
-  private table = 'tickets';
+export interface Ticket extends RowDataPacket {
+  id: number;
+  codigo: string;
+  titulo: string;
+  descripcion: string;
+  tipo_ticket_id: number;
+  categoria_id: number;
+  subcategoria_id?: number;
+  prioridad_id: number;
+  estado_id: number;
+  solicitante_id: number;
+  tecnico_asignado_id?: number;
+  area_solicitante_id: number;
+  impacto?: string;
+  urgencia?: string;
+  canal_origen?: string;
+  solucion?: string;
+  fecha_asignacion?: Date;
+  fecha_inicio_atencion?: Date;
+  fecha_resolucion?: Date;
+  fecha_cierre?: Date;
+  tiempo_total_resolucion_minutos?: number;
+  reabierto?: boolean;
+  veces_reabierto?: number;
+  google_sheet_id?: string;
+  activo: boolean;
+  created_at: Date;
+  updated_at: Date;
+}
 
-  async findTicketById(id: number): Promise<ITicket | null> {
-    const sql = `
-      SELECT t.*,
-        et.nombre as estado_nombre,
-        p.nombre as prioridad_nombre,
-        ct.nombre as categoria_nombre,
-        tt.nombre as tipo_ticket_nombre,
-        CONCAT(u_sol.nombre, ' ', u_sol.apellido) as solicitante_nombre,
-        CONCAT(u_tec.nombre, ' ', u_tec.apellido) as tecnico_nombre,
-        a.nombre as area_nombre,
-        s.fecha_limite_resolucion as sla_deadline,
-        s.cumple_resolucion as sla_cumplido
-      FROM ${this.table} t
-      INNER JOIN estado_ticket et ON t.estado_id = et.id
-      INNER JOIN prioridad p ON t.prioridad_id = p.id
-      INNER JOIN categoria_ticket ct ON t.categoria_id = ct.id
-      INNER JOIN tipo_ticket tt ON t.tipo_ticket_id = tt.id
-      INNER JOIN usuarios u_sol ON t.solicitante_id = u_sol.id
-      INNER JOIN areas a ON t.area_solicitante_id = a.id
-      LEFT JOIN usuarios u_tec ON t.tecnico_asignado_id = u_tec.id
-      LEFT JOIN sla_seguimiento s ON t.id = s.ticket_id
-      WHERE t.id = ?
-      LIMIT 1
-    `;
-    return this.queryOne<ITicket>(sql, [id]);
-  }
-
-  async findByCode(codigo: string): Promise<ITicket | null> {
-    const sql = `SELECT * FROM ${this.table} WHERE codigo = ? LIMIT 1`;
-    return this.queryOne<ITicket>(sql, [codigo]);
-  }
-
-  async create(data: ICreateTicket): Promise<number> {
-    const codigo = HashUtil.generateTicketCode();
-    
-    const insertData: any = {
-      codigo,
-      titulo: data.titulo,
-      descripcion: data.descripcion,
-      tipo_ticket_id: data.tipo_ticket_id || 1,
-      categoria_id: data.categoria_id || 10,
-      subcategoria_id: data.subcategoria_id || null,
-      prioridad_id: data.prioridad_id || 3,
-      urgencia_id: data.urgencia_id || 3,
-      impacto_id: data.impacto_id || 3,
-      estado_id: 1, // NUEVA
-      solicitante_id: data.solicitante_id,
-      area_solicitante_id: data.area_solicitante_id,
-      origen: data.origen || 'web',
-      slack_thread_ts: data.slack_thread_ts || null,
-      slack_channel_id: data.slack_channel_id || null,
-      es_recurrente: false,
-    };
-
-    return this.insert(this.table, insertData);
-  }
-
-  async updateTicket(id: number, data: IUpdateTicket): Promise<boolean> {
-    return this.update(this.table, id, data);
-  }
-
-  async assignTechnician(ticketId: number, technicianId: number): Promise<boolean> {
-    const sql = `
-      UPDATE ${this.table} 
-      SET tecnico_asignado_id = ?, 
-          fecha_asignacion = NOW(),
-          estado_id = 2,
-          updated_at = NOW()
-      WHERE id = ?
-    `;
-    const result = await this.execute(sql, [technicianId, ticketId]);
-    return result.affectedRows > 0;
-  }
-
-  async updateStatus(ticketId: number, statusId: number): Promise<boolean> {
-    const sql = `UPDATE ${this.table} SET estado_id = ?, updated_at = NOW() WHERE id = ?`;
-    const result = await this.execute(sql, [statusId, ticketId]);
-    return result.affectedRows > 0;
-  }
-
-  async findWithFilters(
-    filters: ITicketFilters,
-    page: number = 1,
-    limit: number = 25
-  ): Promise<{ data: ITicket[]; total: number; page: number; totalPages: number }> {
-    const conditions: string[] = ['1=1'];
-    const params: any[] = [];
-
-    if (filters.estado_id) {
-      conditions.push('t.estado_id = ?');
-      params.push(filters.estado_id);
-    }
-
-    if (filters.prioridad_id) {
-      conditions.push('t.prioridad_id = ?');
-      params.push(filters.prioridad_id);
-    }
-
-    if (filters.categoria_id) {
-      conditions.push('t.categoria_id = ?');
-      params.push(filters.categoria_id);
-    }
-
-    if (filters.solicitante_id) {
-      conditions.push('t.solicitante_id = ?');
-      params.push(filters.solicitante_id);
-    }
-
-    if (filters.tecnico_asignado_id) {
-      conditions.push('t.tecnico_asignado_id = ?');
-      params.push(filters.tecnico_asignado_id);
-    }
-
-    if (filters.area_solicitante_id) {
-      conditions.push('t.area_solicitante_id = ?');
-      params.push(filters.area_solicitante_id);
-    }
-
-    if (filters.fecha_desde) {
-      conditions.push('t.created_at >= ?');
-      params.push(filters.fecha_desde);
-    }
-
-    if (filters.fecha_hasta) {
-      conditions.push('t.created_at <= ?');
-      params.push(filters.fecha_hasta + ' 23:59:59');
-    }
-
-    if (filters.search) {
-      conditions.push('(t.codigo LIKE ? OR t.titulo LIKE ? OR t.descripcion LIKE ?)');
-      const searchTerm = `%${filters.search}%`;
-      params.push(searchTerm, searchTerm, searchTerm);
-    }
-
-    const whereClause = conditions.join(' AND ');
-
-    return this.paginate<ITicket>(
-      this.table + ' t',
-      page,
-      limit,
-      't.*, et.nombre as estado_nombre, p.nombre as prioridad_nombre',
-      whereClause,
-      params,
-      't.created_at DESC'
-    );
-  }
-
-  async findSimilar(titulo: string, descripcion: string, limit: number = 5): Promise<ITicket[]> {
-    const sql = `
-      SELECT t.*, 
-        MATCH(t.titulo, t.descripcion) AGAINST(? IN NATURAL LANGUAGE MODE) as relevancia
-      FROM ${this.table} t
-      WHERE MATCH(t.titulo, t.descripcion) AGAINST(? IN NATURAL LANGUAGE MODE)
-        AND t.estado_id IN (5, 6)
-      ORDER BY relevancia DESC
-      LIMIT ?
-    `;
-    const searchText = `${titulo} ${descripcion}`;
-    const [rows] = await this.query<ITicket[]>(sql, [searchText, searchText, limit]);
-    return rows;
-  }
-
-  async updateClassification(
-    ticketId: number,
-    classification: {
-      tipo_ticket_id?: number;
-      categoria_id?: number;
-      subcategoria_id?: number;
-      prioridad_id?: number;
-      urgencia_id?: number;
-      impacto_id?: number;
-      clasificacion_ia?: any;
-    }
-  ): Promise<boolean> {
-    return this.update(this.table, ticketId, {
-      ...classification,
-      clasificacion_ia: classification.clasificacion_ia
-        ? JSON.stringify(classification.clasificacion_ia)
-        : null,
-    });
-  }
-
+export class TicketRepository extends BaseRepository<Ticket> {
   /**
-   * Buscar tickets con filtros
+   * Buscar tickets con filtros avanzados
    */
-  async findAll(filters: any = {}): Promise<any> {
-    let whereConditions: string[] = ['1=1'];
+  async findWithFilters(filters: {
+    estado_id?: number;
+    prioridad_id?: number;
+    categoria_id?: number;
+    solicitante_id?: number;
+    tecnico_asignado_id?: number;
+    area_id?: number;
+    fecha_desde?: string;
+    fecha_hasta?: string;
+    search?: string;
+    page?: number;
+    limit?: number;
+  }): Promise<any> {
+    const page = filters.page || 1;
+    const limit = filters.limit || 25;
+
+    let whereConditions: string[] = ['t.activo = 1'];
     let params: any[] = [];
 
     if (filters.estado_id) {
@@ -209,50 +69,54 @@ export class TicketRepository extends BaseRepository<ITicket> {
       params.push(filters.categoria_id);
     }
 
-    if (filters.tecnico_asignado_id) {
-      whereConditions.push('t.tecnico_asignado_id = ?');
-      params.push(filters.tecnico_asignado_id);
-    }
-
-    if (filters.area_solicitante_id) {
-      whereConditions.push('t.area_solicitante_id = ?');
-      params.push(filters.area_solicitante_id);
-    }
-
     if (filters.solicitante_id) {
       whereConditions.push('t.solicitante_id = ?');
       params.push(filters.solicitante_id);
     }
 
-    if (filters.fecha_inicio) {
-      whereConditions.push('t.created_at >= ?');
-      params.push(filters.fecha_inicio);
+    if (filters.tecnico_asignado_id) {
+      whereConditions.push('t.tecnico_asignado_id = ?');
+      params.push(filters.tecnico_asignado_id);
     }
 
-    if (filters.fecha_fin) {
-      whereConditions.push('t.created_at <= ?');
-      params.push(filters.fecha_fin);
+    if (filters.area_id) {
+      whereConditions.push('t.area_solicitante_id = ?');
+      params.push(filters.area_id);
+    }
+
+    if (filters.fecha_desde) {
+      whereConditions.push('DATE(t.created_at) >= ?');
+      params.push(filters.fecha_desde);
+    }
+
+    if (filters.fecha_hasta) {
+      whereConditions.push('DATE(t.created_at) <= ?');
+      params.push(filters.fecha_hasta);
+    }
+
+    if (filters.search) {
+      whereConditions.push('(t.codigo LIKE ? OR t.titulo LIKE ? OR t.descripcion LIKE ?)');
+      const searchTerm = `%${filters.search}%`;
+      params.push(searchTerm, searchTerm, searchTerm);
     }
 
     const whereClause = whereConditions.join(' AND ');
-    const page = filters.page || 1;
-    const limit = filters.limit || 25;
 
-    return await this.paginate(
-      `tickets t
-       INNER JOIN tipo_ticket tt ON t.tipo_ticket_id = tt.id
-       INNER JOIN categoria_ticket ct ON t.categoria_id = ct.id
-       INNER JOIN estado_ticket et ON t.estado_id = et.id
-       INNER JOIN prioridad p ON t.prioridad_id = p.id
-       LEFT JOIN usuarios u_tec ON t.tecnico_asignado_id = u_tec.id`,
+    return this.paginate(
+      'tickets t',
       page,
       limit,
-      `t.*, 
-       tt.nombre as tipo_ticket_nombre,
-       ct.nombre as categoria_nombre,
-       et.nombre as estado_nombre,
-       p.nombre as prioridad_nombre,
-       CONCAT(u_tec.nombre, ' ', u_tec.apellido) as tecnico_nombre`,
+      `
+        t.*,
+        tt.nombre as tipo_ticket,
+        ct.nombre as categoria,
+        p.nombre as prioridad,
+        p.nivel as prioridad_nivel,
+        e.nombre as estado,
+        CONCAT(us.nombre, ' ', us.apellido) as solicitante,
+        CONCAT(ut.nombre, ' ', ut.apellido) as tecnico_asignado,
+        a.nombre as area_solicitante
+      `,
       whereClause,
       params,
       't.created_at DESC'
@@ -260,85 +124,150 @@ export class TicketRepository extends BaseRepository<ITicket> {
   }
 
   /**
-   * Actualizar asignación de técnico
+   * Obtener detalle completo del ticket
    */
-  async updateAssignment(ticketId: number, tecnicoId: number): Promise<void> {
-    await this.query(`
-      UPDATE tickets 
-      SET tecnico_asignado_id = ?, fecha_asignacion = NOW()
-      WHERE id = ?
-    `, [tecnicoId, ticketId]);
-  }
-
-  /**
-   * Agregar comentario al ticket
-   */
-  async addComment(ticketId: number, data: any): Promise<void> {
-    await this.query(`
-      INSERT INTO ticket_comentarios 
-      (ticket_id, usuario_id, comentario, es_interno, es_solucion)
-      VALUES (?, ?, ?, ?, ?)
-    `, [
-      ticketId,
-      data.usuario_id,
-      data.comentario,
-      data.es_interno || false,
-      data.es_solucion || false,
-    ]);
-  }
-
-  /**
-   * Obtener comentarios del ticket
-   */
-  async getComments(ticketId: number): Promise<any[]> {
-    const [rows] = await this.query<any[]>(`
+  async findTicketDetail(ticketId: number): Promise<any> {
+    return this.queryOne<any>(`
       SELECT 
-        tc.*,
-        CONCAT(u.nombre, ' ', u.apellido) as usuario_nombre,
-        u.avatar_url
-      FROM ticket_comentarios tc
-      INNER JOIN usuarios u ON tc.usuario_id = u.id
-      WHERE tc.ticket_id = ?
-      ORDER BY tc.created_at ASC
+        t.*,
+        tt.nombre as tipo_ticket,
+        ct.nombre as categoria,
+        sct.nombre as subcategoria,
+        p.nombre as prioridad,
+        p.nivel as prioridad_nivel,
+        p.color as prioridad_color,
+        e.nombre as estado,
+        e.color as estado_color,
+        CONCAT(us.nombre, ' ', us.apellido) as solicitante,
+        us.email as solicitante_email,
+        us.telefono as solicitante_telefono,
+        CONCAT(ut.nombre, ' ', ut.apellido) as tecnico_asignado,
+        ut.email as tecnico_email,
+        a.nombre as area_solicitante,
+        a.codigo as area_codigo,
+        sla.fecha_limite_respuesta,
+        sla.fecha_limite_resolucion,
+        sla.cumple_respuesta,
+        sla.cumple_resolucion
+      FROM tickets t
+      INNER JOIN tipo_ticket tt ON t.tipo_ticket_id = tt.id
+      INNER JOIN categoria_ticket ct ON t.categoria_id = ct.id
+      LEFT JOIN subcategoria_ticket sct ON t.subcategoria_id = sct.id
+      INNER JOIN prioridades p ON t.prioridad_id = p.id
+      INNER JOIN estados_ticket e ON t.estado_id = e.id
+      INNER JOIN usuarios us ON t.solicitante_id = us.id
+      LEFT JOIN usuarios ut ON t.tecnico_asignado_id = ut.id
+      INNER JOIN areas a ON t.area_solicitante_id = a.id
+      LEFT JOIN sla_seguimiento sla ON t.id = sla.ticket_id
+      WHERE t.id = ?
     `, [ticketId]);
-
-    return rows;
   }
 
   /**
-   * Agregar entrada al historial
+   * Generar código único de ticket
    */
-  async addHistory(ticketId: number, data: any): Promise<void> {
-    await this.query(`
-      INSERT INTO ticket_historial 
-      (ticket_id, usuario_id, accion, campo_modificado, valor_anterior, valor_nuevo, descripcion)
-      VALUES (?, ?, ?, ?, ?, ?, ?)
-    `, [
-      ticketId,
-      data.usuario_id || null,
-      data.accion,
-      data.campo_modificado || null,
-      data.valor_anterior || null,
-      data.valor_nuevo || null,
-      data.descripcion || null,
-    ]);
+  async generateTicketCode(): Promise<string> {
+    const [result] = await this.query<any[]>(
+      'SELECT COUNT(*) as total FROM tickets WHERE DATE(created_at) = CURDATE()'
+    );
+
+    const today = new Date();
+    const year = today.getFullYear().toString().slice(-2);
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    const sequence = String(result[0].total + 1).padStart(4, '0');
+
+    return `TKT-${year}${month}${day}-${sequence}`;
   }
 
   /**
-   * Obtener historial del ticket
+   * Asignar técnico a ticket
    */
-  async getHistory(ticketId: number): Promise<any[]> {
-    const [rows] = await this.query<any[]>(`
+  async assignTechnician(ticketId: number, tecnicoId: number): Promise<void> {
+    await this.update('tickets', ticketId, {
+      tecnico_asignado_id: tecnicoId,
+      fecha_asignacion: new Date(),
+      estado_id: 2, // En proceso
+    });
+
+    // Incrementar carga del técnico
+    await this.execute(
+      'UPDATE usuarios SET carga_actual = carga_actual + 1 WHERE id = ?',
+      [tecnicoId]
+    );
+  }
+
+  /**
+   * Cambiar estado del ticket
+   */
+  async changeStatus(ticketId: number, estadoId: number, userId: number): Promise<void> {
+    const updateData: any = { estado_id: estadoId };
+
+    // Si es resolución
+    if (estadoId === 5) {
+      updateData.fecha_resolucion = new Date();
+    }
+
+    // Si es cierre
+    if (estadoId === 6) {
+      updateData.fecha_cierre = new Date();
+    }
+
+    await this.update('tickets', ticketId, updateData);
+  }
+
+  /**
+   * Obtener tickets activos del técnico
+   */
+  async getActiveTechnicianTickets(tecnicoId: number): Promise<Ticket[]> {
+    const [tickets] = await this.query<Ticket[]>(`
+      SELECT t.*
+      FROM tickets t
+      WHERE t.tecnico_asignado_id = ?
+        AND t.estado_id NOT IN (5, 6, 7)
+        AND t.activo = 1
+      ORDER BY t.prioridad_id ASC, t.created_at ASC
+    `, [tecnicoId]);
+
+    return tickets;
+  }
+
+  /**
+   * Obtener tickets por solicitante
+   */
+  async getTicketsBySolicitante(solicitanteId: number, page = 1, limit = 25): Promise<any> {
+    return this.paginate(
+      'tickets t',
+      page,
+      limit,
+      `
+        t.*,
+        tt.nombre as tipo_ticket,
+        ct.nombre as categoria,
+        p.nombre as prioridad,
+        e.nombre as estado,
+        CONCAT(ut.nombre, ' ', ut.apellido) as tecnico_asignado
+      `,
+      't.solicitante_id = ? AND t.activo = 1',
+      [solicitanteId],
+      't.created_at DESC'
+    );
+  }
+
+  /**
+   * Estadísticas generales
+   */
+  async getGeneralStats(): Promise<any> {
+    return this.queryOne<any>(`
       SELECT 
-        th.*,
-        CONCAT(u.nombre, ' ', u.apellido) as usuario_nombre
-      FROM ticket_historial th
-      LEFT JOIN usuarios u ON th.usuario_id = u.id
-      WHERE th.ticket_id = ?
-      ORDER BY th.created_at DESC
-    `, [ticketId]);
-
-    return rows;
+        COUNT(*) as total_tickets,
+        COUNT(CASE WHEN estado_id IN (1,2,3,4,8) THEN 1 END) as tickets_activos,
+        COUNT(CASE WHEN estado_id = 5 THEN 1 END) as tickets_resueltos,
+        COUNT(CASE WHEN estado_id = 6 THEN 1 END) as tickets_cerrados,
+        COUNT(CASE WHEN prioridad_id = 1 THEN 1 END) as tickets_criticos,
+        ROUND(AVG(tiempo_total_resolucion_minutos), 0) as tiempo_promedio_resolucion
+      FROM tickets
+      WHERE activo = 1
+    `);
   }
 }
-

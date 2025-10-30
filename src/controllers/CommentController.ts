@@ -5,20 +5,19 @@ import { logger } from '@utils/logger.util';
 import { AppError } from '@middleware/error.middleware';
 
 export class CommentController {
-  private repository: BaseRepository;
+  private repository: BaseRepository<any>;
 
   constructor() {
-    this.repository = new BaseRepository();
+    this.repository = new BaseRepository<any>();
   }
 
   /**
    * Listar comentarios de un ticket
-   * GET /api/tickets/:ticketId/comments
    */
   list = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const ticketId = parseInt(req.params.ticketId);
-      const includeInternal = req.user?.rol_id && req.user.rol_id <= 3; // Solo técnicos+ ven internos
+      const includeInternal = req.user?.rol_id && req.user.rol_id <= 3;
 
       logger.info(`💬 Listando comentarios del ticket ${ticketId}`);
 
@@ -36,29 +35,13 @@ export class CommentController {
           CONCAT(u.nombre, ' ', u.apellido) as usuario_nombre,
           u.email as usuario_email,
           u.avatar_url as usuario_avatar,
-          r.nombre as usuario_rol,
-          (
-            SELECT JSON_ARRAYAGG(
-              JSON_OBJECT(
-                'id', a.id,
-                'nombre_archivo', a.nombre_archivo,
-                'ruta_archivo', a.ruta_archivo,
-                'tipo_mime', a.tipo_mime,
-                'tamano_bytes', a.tamano_bytes,
-                'es_imagen', a.es_imagen,
-                'thumbnail_url', a.thumbnail_url
-              )
-            )
-            FROM ticket_adjuntos a
-            WHERE a.comentario_id = tc.id
-          ) as adjuntos
+          r.nombre as usuario_rol
         FROM ticket_comentarios tc
         INNER JOIN usuarios u ON tc.usuario_id = u.id
         INNER JOIN roles r ON u.rol_id = r.id
         WHERE tc.ticket_id = ?
       `;
 
-      // Si no es técnico, ocultar comentarios internos
       if (!includeInternal) {
         query += ' AND tc.es_interno = FALSE';
       }
@@ -67,13 +50,7 @@ export class CommentController {
 
       const [comments] = await this.repository.query<any[]>(query, [ticketId]);
 
-      // Parsear adjuntos JSON
-      const parsedComments = comments.map(comment => ({
-        ...comment,
-        adjuntos: comment.adjuntos ? JSON.parse(comment.adjuntos) : [],
-      }));
-
-      res.json(successResponse(parsedComments, 'Comentarios obtenidos'));
+      res.json(successResponse(comments, 'Comentarios obtenidos'));
     } catch (error: any) {
       logger.error(`❌ Error al listar comentarios: ${error.message}`);
       next(error);
@@ -81,39 +58,7 @@ export class CommentController {
   };
 
   /**
-   * Obtener comentario por ID
-   * GET /api/comments/:id
-   */
-  getById = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    try {
-      const commentId = parseInt(req.params.id);
-
-      logger.info(`🔍 Obteniendo comentario ID: ${commentId}`);
-
-      const [comments] = await this.repository.query<any[]>(`
-        SELECT 
-          tc.*,
-          CONCAT(u.nombre, ' ', u.apellido) as usuario_nombre,
-          u.email as usuario_email
-        FROM ticket_comentarios tc
-        INNER JOIN usuarios u ON tc.usuario_id = u.id
-        WHERE tc.id = ?
-      `, [commentId]);
-
-      if (!comments || comments.length === 0) {
-        throw new AppError('Comentario no encontrado', 404);
-      }
-
-      res.json(successResponse(comments[0], 'Comentario obtenido'));
-    } catch (error: any) {
-      logger.error(`❌ Error al obtener comentario: ${error.message}`);
-      next(error);
-    }
-  };
-
-  /**
    * Crear comentario
-   * POST /api/tickets/:ticketId/comments
    */
   create = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
@@ -128,12 +73,9 @@ export class CommentController {
       logger.info(`📝 Creando comentario en ticket ${ticketId}`);
 
       // Verificar que el ticket existe
-      const [ticket] = await this.repository.query<any[]>(
-        'SELECT id FROM tickets WHERE id = ?',
-        [ticketId]
-      );
+      const ticket = await this.repository.findById('tickets', ticketId);
 
-      if (!ticket || ticket.length === 0) {
+      if (!ticket) {
         throw new AppError('Ticket no encontrado', 404);
       }
 
@@ -149,7 +91,7 @@ export class CommentController {
         es_solucion: es_solucion || false,
       };
 
-      const commentId = await this.repository.create('ticket_comentarios', commentData);
+      const commentId = await this.repository.insert('ticket_comentarios', commentData);
 
       // Si es solución, actualizar el ticket
       if (es_solucion) {
@@ -159,14 +101,14 @@ export class CommentController {
       }
 
       // Registrar en historial
-      await this.repository.create('ticket_historial', {
+      await this.repository.insert('ticket_historial', {
         ticket_id: ticketId,
         usuario_id: userId,
         accion: 'comentario_agregado',
         descripcion: `Comentario ${isInternal ? 'interno' : 'público'} agregado`,
       });
 
-      // Obtener el comentario creado con datos del usuario
+      // Obtener el comentario creado
       const [newComment] = await this.repository.query<any[]>(`
         SELECT 
           tc.*,
@@ -189,7 +131,6 @@ export class CommentController {
 
   /**
    * Actualizar comentario
-   * PATCH /api/comments/:id
    */
   update = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
@@ -203,19 +144,17 @@ export class CommentController {
 
       logger.info(`✏️ Actualizando comentario ${commentId}`);
 
-      // Verificar que el comentario existe y pertenece al usuario
-      const [existingComment] = await this.repository.query<any[]>(
-        'SELECT * FROM ticket_comentarios WHERE id = ?',
-        [commentId]
-      );
+      const existingComment = await this.repository.findById('ticket_comentarios', commentId);
 
-      if (!existingComment || existingComment.length === 0) {
+      if (!existingComment) {
         throw new AppError('Comentario no encontrado', 404);
       }
 
       // Solo el autor puede editar (o admin)
       const userRole = req.user?.rol_id;
-      if (existingComment[0].usuario_id !== userId && userRole !== 1) {
+      const comment = existingComment as any;
+
+      if (comment.usuario_id !== userId && userRole !== 1) {
         throw new AppError('No tienes permiso para editar este comentario', 403);
       }
 
@@ -245,7 +184,6 @@ export class CommentController {
 
   /**
    * Eliminar comentario
-   * DELETE /api/comments/:id
    */
   delete = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
@@ -258,19 +196,16 @@ export class CommentController {
 
       logger.info(`🗑️ Eliminando comentario ${commentId}`);
 
-      // Verificar que el comentario existe
-      const [existingComment] = await this.repository.query<any[]>(
-        'SELECT * FROM ticket_comentarios WHERE id = ?',
-        [commentId]
-      );
+      const existingComment = await this.repository.findById('ticket_comentarios', commentId);
 
-      if (!existingComment || existingComment.length === 0) {
+      if (!existingComment) {
         throw new AppError('Comentario no encontrado', 404);
       }
 
-      // Solo el autor o admin pueden eliminar
+      const comment = existingComment as any;
       const userRole = req.user?.rol_id;
-      if (existingComment[0].usuario_id !== userId && userRole !== 1) {
+
+      if (comment.usuario_id !== userId && userRole !== 1) {
         throw new AppError('No tienes permiso para eliminar este comentario', 403);
       }
 
@@ -286,8 +221,7 @@ export class CommentController {
   };
 
   /**
-   * Marcar comentario como solución
-   * PATCH /api/comments/:id/mark-solution
+   * Marcar como solución
    */
   markAsSolution = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
@@ -300,20 +234,17 @@ export class CommentController {
 
       logger.info(`✅ Marcando comentario ${commentId} como solución`);
 
-      // Obtener el comentario y su ticket
-      const [comment] = await this.repository.query<any[]>(
-        'SELECT * FROM ticket_comentarios WHERE id = ?',
-        [commentId]
-      );
+      const comment = await this.repository.findById('ticket_comentarios', commentId);
 
-      if (!comment || comment.length === 0) {
+      if (!comment) {
         throw new AppError('Comentario no encontrado', 404);
       }
 
-      const ticketId = comment[0].ticket_id;
+      const commentData = comment as any;
+      const ticketId = commentData.ticket_id;
 
-      // Desmarcar otros comentarios como solución
-      await this.repository.query(
+      // Desmarcar otros comentarios
+      await this.repository.execute(
         'UPDATE ticket_comentarios SET es_solucion = FALSE WHERE ticket_id = ?',
         [ticketId]
       );
@@ -323,9 +254,9 @@ export class CommentController {
         es_solucion: true,
       });
 
-      // Actualizar ticket con la solución
+      // Actualizar ticket
       await this.repository.update('tickets', ticketId, {
-        solucion: comment[0].comentario,
+        solucion: commentData.comentario,
       });
 
       logger.info(`✅ Comentario marcado como solución: ${commentId}`);
@@ -333,41 +264,6 @@ export class CommentController {
       res.json(successResponse(null, 'Comentario marcado como solución'));
     } catch (error: any) {
       logger.error(`❌ Error al marcar solución: ${error.message}`);
-      next(error);
-    }
-  };
-
-  /**
-   * Obtener comentarios internos de un ticket
-   * GET /api/tickets/:ticketId/comments/internal
-   */
-  getInternalComments = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    try {
-      const ticketId = parseInt(req.params.ticketId);
-
-      // Solo técnicos pueden ver comentarios internos
-      const userRole = req.user?.rol_id;
-      if (!userRole || userRole > 3) {
-        throw new AppError('No tienes permiso para ver comentarios internos', 403);
-      }
-
-      logger.info(`🔒 Obteniendo comentarios internos del ticket ${ticketId}`);
-
-      const [comments] = await this.repository.query<any[]>(`
-        SELECT 
-          tc.*,
-          CONCAT(u.nombre, ' ', u.apellido) as usuario_nombre,
-          u.email as usuario_email,
-          u.avatar_url as usuario_avatar
-        FROM ticket_comentarios tc
-        INNER JOIN usuarios u ON tc.usuario_id = u.id
-        WHERE tc.ticket_id = ? AND tc.es_interno = TRUE
-        ORDER BY tc.created_at ASC
-      `, [ticketId]);
-
-      res.json(successResponse(comments, 'Comentarios internos obtenidos'));
-    } catch (error: any) {
-      logger.error(`❌ Error al obtener comentarios internos: ${error.message}`);
       next(error);
     }
   };

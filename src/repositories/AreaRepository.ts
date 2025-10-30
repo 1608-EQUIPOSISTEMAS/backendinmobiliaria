@@ -1,0 +1,141 @@
+import { BaseRepository } from '@repositories/base/BaseRepository';
+import { RowDataPacket } from 'mysql2/promise';
+
+export interface Area extends RowDataPacket {
+  id: number;
+  nombre: string;
+  codigo: string;
+  descripcion?: string;
+  responsable_id?: number;
+  activo: boolean;
+  created_at: Date;
+  updated_at: Date;
+}
+
+export class AreaRepository extends BaseRepository<Area> {
+  /**
+   * Obtener todas las áreas activas
+   */
+  async findAllActive(): Promise<Area[]> {
+    const [areas] = await this.query<Area[]>(`
+      SELECT *
+      FROM areas
+      WHERE activo = 1
+      ORDER BY nombre ASC
+    `);
+
+    return areas;
+  }
+
+  /**
+   * Obtener área con responsable
+   */
+  async findAreaWithResponsable(areaId: number): Promise<any> {
+    return this.queryOne<any>(`
+      SELECT 
+        a.*,
+        CONCAT(u.nombre, ' ', u.apellido) as responsable_nombre,
+        u.email as responsable_email
+      FROM areas a
+      LEFT JOIN usuarios u ON a.responsable_id = u.id
+      WHERE a.id = ?
+    `, [areaId]);
+  }
+
+  /**
+   * Obtener áreas con estadísticas
+   */
+  async findAreasWithStats(): Promise<any[]> {
+    const [areas] = await this.query<any[]>(`
+      SELECT 
+        a.*,
+        CONCAT(u.nombre, ' ', u.apellido) as responsable,
+        (SELECT COUNT(*) FROM usuarios WHERE area_id = a.id AND activo = 1) as total_usuarios,
+        (SELECT COUNT(*) FROM tickets WHERE area_solicitante_id = a.id) as total_tickets,
+        (SELECT COUNT(*) FROM tickets WHERE area_solicitante_id = a.id AND estado_id IN (1,2,3,4,8)) as tickets_activos
+      FROM areas a
+      LEFT JOIN usuarios u ON a.responsable_id = u.id
+      WHERE a.activo = 1
+      ORDER BY a.nombre ASC
+    `);
+
+    return areas;
+  }
+
+  /**
+   * Obtener usuarios del área
+   */
+  async getAreaUsers(areaId: number): Promise<any[]> {
+    const [users] = await this.query<any[]>(`
+      SELECT 
+        u.id,
+        CONCAT(u.nombre, ' ', u.apellido) as nombre_completo,
+        u.email,
+        u.es_tecnico,
+        r.nombre as rol
+      FROM usuarios u
+      INNER JOIN roles r ON u.rol_id = r.id
+      WHERE u.area_id = ? AND u.activo = 1
+      ORDER BY u.nombre ASC
+    `, [areaId]);
+
+    return users;
+  }
+
+  /**
+   * Buscar área por código
+   */
+  async findByCode(codigo: string): Promise<Area | null> {
+    return this.queryOne<Area>(
+      'SELECT * FROM areas WHERE codigo = ? AND activo = 1',
+      [codigo]
+    );
+  }
+
+  /**
+   * Validar si área existe
+   */
+  async exists(areaId: number): Promise<boolean> {
+    const area = await this.queryOne<any>(
+      'SELECT id FROM areas WHERE id = ? AND activo = 1',
+      [areaId]
+    );
+
+    return !!area;
+  }
+
+  /**
+   * Asignar responsable
+   */
+  async assignResponsable(areaId: number, responsableId: number): Promise<boolean> {
+    return this.update('areas', areaId, {
+      responsable_id: responsableId,
+    });
+  }
+
+  /**
+   * Obtener métricas del área
+   */
+  async getAreaMetrics(areaId: number, fechaInicio?: string, fechaFin?: string): Promise<any> {
+    let dateFilter = '';
+    const params: any[] = [areaId];
+
+    if (fechaInicio && fechaFin) {
+      dateFilter = 'AND DATE(t.created_at) BETWEEN ? AND ?';
+      params.push(fechaInicio, fechaFin);
+    }
+
+    return this.queryOne<any>(`
+      SELECT 
+        COUNT(*) as total_tickets,
+        COUNT(CASE WHEN t.estado_id IN (1,2,3,4,8) THEN 1 END) as tickets_activos,
+        COUNT(CASE WHEN t.estado_id = 5 THEN 1 END) as tickets_resueltos,
+        COUNT(CASE WHEN t.prioridad_id = 1 THEN 1 END) as tickets_criticos,
+        ROUND(AVG(t.tiempo_total_resolucion_minutos), 0) as tiempo_promedio_resolucion,
+        ROUND(AVG(st.puntuacion_general), 2) as satisfaccion_promedio
+      FROM tickets t
+      LEFT JOIN satisfaccion_tickets st ON t.id = st.ticket_id
+      WHERE t.area_solicitante_id = ? ${dateFilter}
+    `, params);
+  }
+}

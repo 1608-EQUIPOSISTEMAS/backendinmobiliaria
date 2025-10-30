@@ -3,19 +3,17 @@ import { UserRepository } from '@repositories/UserRepository';
 import { successResponse } from '@utils/response.util';
 import { logger } from '@utils/logger.util';
 import { PasswordService } from '@services/auth/PasswordService';
+import { AppError } from '@middleware/error.middleware';
 
 export class UserController {
   private userRepository: UserRepository;
-  private passwordService: PasswordService;
 
   constructor() {
     this.userRepository = new UserRepository();
-    this.passwordService = new PasswordService();
   }
 
   /**
    * Listar usuarios
-   * GET /api/users
    */
   list = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
@@ -24,15 +22,27 @@ export class UserController {
         area_id: req.query.area_id,
         es_tecnico: req.query.es_tecnico,
         activo: req.query.activo,
-        page: req.query.page ? parseInt(req.query.page as string) : 1,
-        limit: req.query.limit ? parseInt(req.query.limit as string) : 25,
       };
+
+      const page = req.query.page ? parseInt(req.query.page as string) : 1;
+      const limit = req.query.limit ? parseInt(req.query.limit as string) : 25;
 
       logger.info('👥 Listando usuarios');
 
-      const users = await this.userRepository.findAllUsers(filters);
+      // Construir WHERE clause
+      const { where, params } = this.userRepository.buildWhereClause(filters);
 
-      res.json(successResponse(users, 'Usuarios obtenidos'));
+      const result = await this.userRepository.paginate(
+        'usuarios',
+        page,
+        limit,
+        'id, nombre, apellido, email, rol_id, area_id, es_tecnico, activo, disponible, carga_actual, max_tickets, created_at',
+        where,
+        params,
+        'id DESC'
+      );
+
+      res.json(successResponse(result, 'Usuarios obtenidos'));
     } catch (error: any) {
       logger.error(`❌ Error al listar usuarios: ${error.message}`);
       next(error);
@@ -41,7 +51,6 @@ export class UserController {
 
   /**
    * Obtener usuario por ID
-   * GET /api/users/:id
    */
   getById = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
@@ -49,14 +58,16 @@ export class UserController {
 
       logger.info(`🔍 Obteniendo usuario ID: ${userId}`);
 
-      const user = await this.userRepository.findUserById(userId);
+      const user = await this.userRepository.findById('usuarios', userId);
 
       if (!user) {
-        res.status(404).json(successResponse(null, 'Usuario no encontrado'));
-        return;
+        throw new AppError('Usuario no encontrado', 404);
       }
 
-      res.json(successResponse(user, 'Usuario obtenido'));
+      // Remover password_hash
+      const { password_hash, ...userData } = user as any;
+
+      res.json(successResponse(userData, 'Usuario obtenido'));
     } catch (error: any) {
       logger.error(`❌ Error al obtener usuario: ${error.message}`);
       next(error);
@@ -65,7 +76,6 @@ export class UserController {
 
   /**
    * Crear nuevo usuario
-   * POST /api/users
    */
   create = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
@@ -73,20 +83,36 @@ export class UserController {
 
       logger.info(`📝 Creando usuario: ${userData.email}`);
 
+      // Verificar si el email ya existe
+      const existingUser = await this.userRepository.queryOne<any>(
+        'SELECT id FROM usuarios WHERE email = ?',
+        [userData.email]
+      );
+
+      if (existingUser) {
+        throw new AppError('El email ya está registrado', 409);
+      }
+
       // Hashear contraseña
-      const hashedPassword = await this.passwordService.hashPassword(userData.password);
+      const hashedPassword = await PasswordService.hashPassword(userData.password);
 
       const newUser = {
         ...userData,
         password_hash: hashedPassword,
+        activo: true,
       };
 
-      const userId = await this.userRepository.create(newUser);
-      const user = await this.userRepository.findUserById(userId);
+      delete newUser.password;
+
+      const userId = await this.userRepository.insert('usuarios', newUser);
+      const user = await this.userRepository.findById('usuarios', userId);
+
+      // Remover password_hash
+      const { password_hash, ...userDataResponse } = user as any;
 
       logger.info(`✅ Usuario creado: ${userId}`);
 
-      res.status(201).json(successResponse(user, 'Usuario creado exitosamente'));
+      res.status(201).json(successResponse(userDataResponse, 'Usuario creado exitosamente'));
     } catch (error: any) {
       logger.error(`❌ Error al crear usuario: ${error.message}`);
       next(error);
@@ -95,7 +121,6 @@ export class UserController {
 
   /**
    * Actualizar usuario
-   * PATCH /api/users/:id
    */
   update = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
@@ -106,16 +131,19 @@ export class UserController {
 
       // Si se actualiza la contraseña, hashearla
       if (updateData.password) {
-        updateData.password_hash = await this.passwordService.hashPassword(updateData.password);
+        updateData.password_hash = await PasswordService.hashPassword(updateData.password);
         delete updateData.password;
       }
 
-      await this.userRepository.update(userId, updateData);
-      const user = await this.userRepository.findUserById(userId);
+      await this.userRepository.update('usuarios', userId, updateData);
+      const user = await this.userRepository.findById('usuarios', userId);
+
+      // Remover password_hash
+      const { password_hash, ...userData } = user as any;
 
       logger.info(`✅ Usuario actualizado: ${userId}`);
 
-      res.json(successResponse(user, 'Usuario actualizado'));
+      res.json(successResponse(userData, 'Usuario actualizado'));
     } catch (error: any) {
       logger.error(`❌ Error al actualizar usuario: ${error.message}`);
       next(error);
@@ -123,8 +151,7 @@ export class UserController {
   };
 
   /**
-   * Desactivar usuario (soft delete)
-   * DELETE /api/users/:id
+   * Desactivar usuario
    */
   delete = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
@@ -132,7 +159,7 @@ export class UserController {
 
       logger.info(`🗑️ Desactivando usuario ID: ${userId}`);
 
-      await this.userRepository.update(userId, { activo: false });
+      await this.userRepository.softDelete('usuarios', userId);
 
       logger.info(`✅ Usuario desactivado: ${userId}`);
 
@@ -144,22 +171,22 @@ export class UserController {
   };
 
   /**
-   * Cambiar rol de usuario
-   * PATCH /api/users/:id/role
+   * Cambiar rol
    */
   changeRole = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const userId = parseInt(req.params.id);
       const { rol_id } = req.body;
 
-      logger.info(`🔐 Cambiando rol del usuario ${userId} a rol ${rol_id}`);
+      logger.info(`🔐 Cambiando rol del usuario ${userId}`);
 
-      await this.userRepository.update(userId, { rol_id });
-      const user = await this.userRepository.findUserById(userId);
+      await this.userRepository.update('usuarios', userId, { rol_id });
+      const user = await this.userRepository.findById('usuarios', userId);
 
-      logger.info(`✅ Rol actualizado: ${userId}`);
+      // Remover password_hash
+      const { password_hash, ...userData } = user as any;
 
-      res.json(successResponse(user, 'Rol actualizado'));
+      res.json(successResponse(userData, 'Rol actualizado'));
     } catch (error: any) {
       logger.error(`❌ Error al cambiar rol: ${error.message}`);
       next(error);
@@ -167,22 +194,22 @@ export class UserController {
   };
 
   /**
-   * Actualizar disponibilidad de técnico
-   * PATCH /api/users/:id/availability
+   * Actualizar disponibilidad
    */
   updateAvailability = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const userId = parseInt(req.params.id);
       const { disponible } = req.body;
 
-      logger.info(`📊 Actualizando disponibilidad del usuario ${userId}: ${disponible}`);
+      logger.info(`📊 Actualizando disponibilidad del usuario ${userId}`);
 
-      await this.userRepository.update(userId, { disponible });
-      const user = await this.userRepository.findUserById(userId);
+      await this.userRepository.update('usuarios', userId, { disponible });
+      const user = await this.userRepository.findById('usuarios', userId);
 
-      logger.info(`✅ Disponibilidad actualizada: ${userId}`);
+      // Remover password_hash
+      const { password_hash, ...userData } = user as any;
 
-      res.json(successResponse(user, 'Disponibilidad actualizada'));
+      res.json(successResponse(userData, 'Disponibilidad actualizada'));
     } catch (error: any) {
       logger.error(`❌ Error al actualizar disponibilidad: ${error.message}`);
       next(error);
@@ -190,8 +217,7 @@ export class UserController {
   };
 
   /**
-   * Obtener técnicos activos
-   * GET /api/users/technicians
+   * Obtener técnicos
    */
   getTechnicians = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
@@ -209,8 +235,7 @@ export class UserController {
           a.nombre as area
         FROM usuarios u
         INNER JOIN areas a ON u.area_id = a.id
-        WHERE u.es_tecnico = TRUE
-          AND u.activo = TRUE
+        WHERE u.es_tecnico = TRUE AND u.activo = TRUE
         ORDER BY u.nombre ASC
       `);
 
@@ -222,8 +247,7 @@ export class UserController {
   };
 
   /**
-   * Obtener estadísticas del usuario
-   * GET /api/users/:id/stats
+   * Estadísticas de usuario
    */
   getStats = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
@@ -240,8 +264,7 @@ export class UserController {
           ROUND(AVG(st.puntuacion_general), 2) as satisfaccion_promedio
         FROM tickets t
         LEFT JOIN satisfaccion_tickets st ON t.id = st.ticket_id
-        WHERE t.solicitante_id = ?
-          OR t.tecnico_asignado_id = ?
+        WHERE t.solicitante_id = ? OR t.tecnico_asignado_id = ?
       `, [userId, userId]);
 
       res.json(successResponse(stats, 'Estadísticas obtenidas'));
