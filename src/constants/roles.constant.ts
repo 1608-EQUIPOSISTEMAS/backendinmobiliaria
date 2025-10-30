@@ -1,0 +1,23 @@
+export enum ROLES {
+  SUPER_ADMIN = 1,
+  COORDINADOR_TI = 2,
+  TECNICO_TI = 3,
+  USUARIO_SOLICITANTE = 4,
+  INVITADO = 5,
+}
+
+export const ROLE_NAMES = {
+  [ROLES.SUPER_ADMIN]: 'Super Admin',
+  [ROLES.COORDINADOR_TI]: 'Coordinador TI',
+  [ROLES.TECNICO_TI]: 'Técnico TI',
+  [ROLES.USUARIO_SOLICITANTE]: 'Usuario Solicitante',
+  [ROLES.INVITADO]: 'Invitado',
+};
+
+export const ROLE_HIERARCHY = {
+  [ROLES.SUPER_ADMIN]: 5,
+  [ROLES.COORDINADOR_TI]: 4,
+  [ROLES.TECNICO_TI]: 3,
+  [ROLES.USUARIO_SOLICITANTE]: 2,
+  [ROLES.INVITADO]: 1,
+};
