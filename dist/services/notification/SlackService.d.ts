@@ -30,5 +30,13 @@ export declare class SlackService {
      * Envía un mensaje personalizado
      */
     sendCustomMessage(message: ISlackMessage): Promise<void>;
+    /**
+     * 🆕 Enviar mensaje directo (DM) a un usuario
+     */
+    sendDirectMessage(slackUserId: string, text: string): Promise<void>;
+    /**
+     * 🆕 Enviar mensaje a un canal
+     */
+    sendChannelMessage(channel: string, text: string, blocks?: any[]): Promise<void>;
 }
 //# sourceMappingURL=SlackService.d.ts.map

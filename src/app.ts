@@ -4,6 +4,7 @@ import helmet from 'helmet';
 import { errorHandler, notFoundHandler } from '@middleware/error.middleware';
 import { generalLimiter } from '@middleware/rateLimit.middleware';
 import { logger } from '@utils/logger.util';
+import routes from '@routes/index'; // ✅ AGREGAR IMPORT
 
 class App {
   public app: Application;
@@ -19,7 +20,7 @@ class App {
     // Seguridad
     this.app.use(helmet());
     
-    // CORS - Permitir PHP frontend
+    // CORS - Permitir frontend
     this.app.use(
       cors({
         origin: true, // En producción, especificar dominio exacto
@@ -36,7 +37,7 @@ class App {
     // Rate limiting
     this.app.use('/api/', generalLimiter);
 
-    // Health check
+    // Health check simple
     this.app.get('/health', (req, res) => {
       res.json({ status: 'OK', timestamp: new Date().toISOString() });
     });
@@ -45,9 +46,8 @@ class App {
   }
 
   private initializeRoutes(): void {
-    // TODO: Importar rutas cuando estén creadas
-    // import routes from '@routes/index';
-    // this.app.use('/api', routes);
+    // ✅ MONTAR RUTAS
+    this.app.use('/api', routes);
     
     logger.info('✅ Rutas inicializadas');
   }

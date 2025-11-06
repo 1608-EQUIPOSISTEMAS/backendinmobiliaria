@@ -131,3 +131,48 @@ export const listUsersValidator: ValidationChain[] = [
     .isInt({ min: 1 })
     .withMessage('ID de área inválido'),
 ];
+
+/**
+ * Validator para actualización de perfil propio
+ */
+export const updateProfileValidator: ValidationChain[] = [
+  body('nombre')
+    .optional()
+    .trim()
+    .isLength({ min: 2 })
+    .withMessage('El nombre debe tener al menos 2 caracteres'),
+  body('apellido')
+    .optional()
+    .trim()
+    .isLength({ min: 2 })
+    .withMessage('El apellido debe tener al menos 2 caracteres'),
+  body('telefono')
+    .optional()
+    .trim(),
+  body('email')
+    .optional()
+    .isEmail()
+    .withMessage('Email inválido')
+    .normalizeEmail(),
+  body('password')
+    .optional()
+    .isLength({ min: 8 })
+    .withMessage('La contraseña debe tener al menos 8 caracteres'),
+  // Campos que NO se pueden actualizar desde el perfil
+  body('rol_id')
+    .not()
+    .exists()
+    .withMessage('No puedes cambiar tu propio rol'),
+  body('activo')
+    .not()
+    .exists()
+    .withMessage('No puedes cambiar tu estado activo'),
+  body('es_tecnico')
+    .not()
+    .exists()
+    .withMessage('No puedes cambiar tu tipo de usuario'),
+  body('area_id')
+    .optional()
+    .isInt({ min: 1 })
+    .withMessage('ID de área inválido')
+];

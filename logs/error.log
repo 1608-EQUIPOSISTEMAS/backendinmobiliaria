@@ -1,0 +1,99 @@
+2025-11-03 18:00:00 [error]: Error: Unknown column 'a.slack_channel_id' in 'field list'
+    at PromisePool.execute (C:\laragon\www\SistemaIncidencias\Backend\node_modules\mysql2\lib\promise\pool.js:54:22)
+    at SlaAlertJob.query (C:\laragon\www\SistemaIncidencias\Backend\src\repositories\base\BaseRepository.ts:29:22)
+    at SlaAlertJob.getTicketsProximosVencerRespuesta (C:\laragon\www\SistemaIncidencias\Backend\src\jobs\slaAlert.job.ts:77:34)
+    at SlaAlertJob.checkSlaAlerts (C:\laragon\www\SistemaIncidencias\Backend\src\jobs\slaAlert.job.ts:35:51)
+    at Task._execution (C:\laragon\www\SistemaIncidencias\Backend\src\jobs\slaAlert.job.ts:385:18)
+    at Task.execute (C:\laragon\www\SistemaIncidencias\Backend\node_modules\node-cron\src\task.js:17:25)
+    at ScheduledTask.now (C:\laragon\www\SistemaIncidencias\Backend\node_modules\node-cron\src\scheduled-task.js:38:33)
+    at Scheduler.<anonymous> (C:\laragon\www\SistemaIncidencias\Backend\node_modules\node-cron\src\scheduled-task.js:25:18)
+    at Scheduler.emit (node:events:508:28)
+    at Scheduler.emit (node:domain:489:12)
+2025-11-04 08:51:36 [error]: ❌ Error en login: Credenciales inválidas
+2025-11-04 08:51:36 [error]: AppError: Credenciales inválidas
+2025-11-04 08:51:49 [error]: ❌ Error en login: Credenciales inválidas
+2025-11-04 08:51:49 [error]: AppError: Credenciales inválidas
+2025-11-04 08:51:58 [error]: AppError: Errores de validación
+2025-11-04 08:58:21 [error]: AppError: Errores de validación
+2025-11-04 09:00:00 [error]: Error: Unknown column 'a.slack_channel_id' in 'field list'
+    at PromisePool.execute (C:\laragon\www\SistemaIncidencias\Backend\node_modules\mysql2\lib\promise\pool.js:54:22)
+    at SlaAlertJob.query (C:\laragon\www\SistemaIncidencias\Backend\src\repositories\base\BaseRepository.ts:29:22)
+    at SlaAlertJob.getTicketsProximosVencerRespuesta (C:\laragon\www\SistemaIncidencias\Backend\src\jobs\slaAlert.job.ts:77:34)
+    at SlaAlertJob.checkSlaAlerts (C:\laragon\www\SistemaIncidencias\Backend\src\jobs\slaAlert.job.ts:35:51)
+    at Task._execution (C:\laragon\www\SistemaIncidencias\Backend\src\jobs\slaAlert.job.ts:385:18)
+    at Task.execute (C:\laragon\www\SistemaIncidencias\Backend\node_modules\node-cron\src\task.js:17:25)
+    at ScheduledTask.now (C:\laragon\www\SistemaIncidencias\Backend\node_modules\node-cron\src\scheduled-task.js:38:33)
+    at Scheduler.<anonymous> (C:\laragon\www\SistemaIncidencias\Backend\node_modules\node-cron\src\scheduled-task.js:25:18)
+    at Scheduler.emit (node:events:508:28)
+    at Scheduler.emit (node:domain:489:12)
+2025-11-04 09:13:54 [error]: ❌ Error al guardar refresh token: Unknown column 'expira_en' in 'field list'
+2025-11-04 09:13:54 [error]: ❌ Error en login: Error al guardar token
+2025-11-04 09:13:54 [error]: AppError: Error al guardar token
+2025-11-04 09:19:26 [error]: ❌ Error al guardar refresh token: Field 'token_hash' doesn't have a default value
+2025-11-04 09:19:26 [error]: ❌ Error en login: Error al guardar token
+2025-11-04 09:19:26 [error]: AppError: Error al guardar token
+2025-11-04 10:46:05 [error]: Error: Field 'expira_en' doesn't have a default value
+    at PromisePool.execute (C:\laragon\www\SistemaIncidencias\Backend\node_modules\mysql2\lib\promise\pool.js:54:22)
+    at UserRepository.execute (C:\laragon\www\SistemaIncidencias\Backend\src\repositories\base\BaseRepository.ts:41:38)
+    at UserRepository.saveRefreshToken (C:\laragon\www\SistemaIncidencias\Backend\src\repositories\UserRepository.ts:232:18)
+    at AuthService.login (C:\laragon\www\SistemaIncidencias\Backend\src\services\auth\AuthService.ts:43:31)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async AuthController.login (C:\laragon\www\SistemaIncidencias\Backend\src\controllers\AuthController.ts:31:22)
+2025-11-04 10:46:05 [error]: ❌ Error en login: Error al guardar token
+2025-11-04 10:46:05 [error]: AppError: Error al guardar token
+2025-11-04 10:47:26 [error]: Error: Field 'expira_en' doesn't have a default value
+    at PromisePool.execute (C:\laragon\www\SistemaIncidencias\Backend\node_modules\mysql2\lib\promise\pool.js:54:22)
+    at UserRepository.execute (C:\laragon\www\SistemaIncidencias\Backend\src\repositories\base\BaseRepository.ts:41:38)
+    at UserRepository.saveRefreshToken (C:\laragon\www\SistemaIncidencias\Backend\src\repositories\UserRepository.ts:232:18)
+    at AuthService.login (C:\laragon\www\SistemaIncidencias\Backend\src\services\auth\AuthService.ts:43:31)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async AuthController.login (C:\laragon\www\SistemaIncidencias\Backend\src\controllers\AuthController.ts:31:22)
+2025-11-04 10:47:26 [error]: ❌ Error en login: Error al guardar token
+2025-11-04 10:47:26 [error]: AppError: Error al guardar token
+2025-11-04 11:00:00 [error]: Error: Unknown column 'ss.fecha_primera_respuesta' in 'where clause'
+    at PromisePool.execute (C:\laragon\www\SistemaIncidencias\Backend\node_modules\mysql2\lib\promise\pool.js:54:22)
+    at SlaAlertJob.query (C:\laragon\www\SistemaIncidencias\Backend\src\repositories\base\BaseRepository.ts:29:22)
+    at SlaAlertJob.getTicketsProximosVencerRespuesta (C:\laragon\www\SistemaIncidencias\Backend\src\jobs\slaAlert.job.ts:77:34)
+    at SlaAlertJob.checkSlaAlerts (C:\laragon\www\SistemaIncidencias\Backend\src\jobs\slaAlert.job.ts:35:51)
+    at Task._execution (C:\laragon\www\SistemaIncidencias\Backend\src\jobs\slaAlert.job.ts:384:18)
+    at Task.execute (C:\laragon\www\SistemaIncidencias\Backend\node_modules\node-cron\src\task.js:17:25)
+    at ScheduledTask.now (C:\laragon\www\SistemaIncidencias\Backend\node_modules\node-cron\src\scheduled-task.js:38:33)
+    at Scheduler.<anonymous> (C:\laragon\www\SistemaIncidencias\Backend\node_modules\node-cron\src\scheduled-task.js:25:18)
+    at Scheduler.emit (node:events:508:28)
+    at Scheduler.emit (node:domain:489:12)
+2025-11-04 12:00:00 [error]: Error: Unknown column 'ss.fecha_primera_respuesta' in 'where clause'
+    at PromisePool.execute (C:\laragon\www\SistemaIncidencias\Backend\node_modules\mysql2\lib\promise\pool.js:54:22)
+    at SlaAlertJob.query (C:\laragon\www\SistemaIncidencias\Backend\src\repositories\base\BaseRepository.ts:29:22)
+    at SlaAlertJob.getTicketsProximosVencerRespuesta (C:\laragon\www\SistemaIncidencias\Backend\src\jobs\slaAlert.job.ts:77:34)
+    at SlaAlertJob.checkSlaAlerts (C:\laragon\www\SistemaIncidencias\Backend\src\jobs\slaAlert.job.ts:35:51)
+    at Task._execution (C:\laragon\www\SistemaIncidencias\Backend\src\jobs\slaAlert.job.ts:384:18)
+    at Task.execute (C:\laragon\www\SistemaIncidencias\Backend\node_modules\node-cron\src\task.js:17:25)
+    at ScheduledTask.now (C:\laragon\www\SistemaIncidencias\Backend\node_modules\node-cron\src\scheduled-task.js:38:33)
+    at Scheduler.<anonymous> (C:\laragon\www\SistemaIncidencias\Backend\node_modules\node-cron\src\scheduled-task.js:25:18)
+    at Scheduler.emit (node:events:508:28)
+    at Scheduler.emit (node:domain:489:12)
+2025-11-04 16:00:01 [error]: Error: Unknown column 'a.slack_channel_id' in 'field list'
+    at PromisePool.execute (C:\laragon\www\SistemaIncidencias\Backend\node_modules\mysql2\lib\promise\pool.js:54:22)
+    at SlaAlertJob.query (C:\laragon\www\SistemaIncidencias\Backend\src\repositories\base\BaseRepository.ts:29:22)
+    at SlaAlertJob.getTicketsProximosVencerResolucion (C:\laragon\www\SistemaIncidencias\Backend\src\jobs\slaAlert.job.ts:103:34)
+    at SlaAlertJob.checkSlaAlerts (C:\laragon\www\SistemaIncidencias\Backend\src\jobs\slaAlert.job.ts:38:52)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Task._execution (C:\laragon\www\SistemaIncidencias\Backend\src\jobs\slaAlert.job.ts:363:7)
+2025-11-04 16:30:35 [error]: AppError: Token inválido
+2025-11-04 16:34:41 [error]: AppError: Token inválido
+2025-11-04 16:34:58 [error]: AppError: Token inválido
+2025-11-04 17:00:00 [error]: Error: Unknown column 'ss.fecha_resolucion' in 'where clause'
+    at PromisePool.execute (C:\laragon\www\SistemaIncidencias\Backend\node_modules\mysql2\lib\promise\pool.js:54:22)
+    at SlaAlertJob.query (C:\laragon\www\SistemaIncidencias\Backend\src\repositories\base\BaseRepository.ts:29:22)
+    at SlaAlertJob.getTicketsProximosVencerResolucion (C:\laragon\www\SistemaIncidencias\Backend\src\jobs\slaAlert.job.ts:103:34)
+    at SlaAlertJob.checkSlaAlerts (C:\laragon\www\SistemaIncidencias\Backend\src\jobs\slaAlert.job.ts:38:52)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Task._execution (C:\laragon\www\SistemaIncidencias\Backend\src\jobs\slaAlert.job.ts:362:7)
+2025-11-04 18:00:00 [error]: Error: Unknown column 'a.slack_channel_id' in 'field list'
+    at PromisePool.execute (C:\laragon\www\SistemaIncidencias\Backend\node_modules\mysql2\lib\promise\pool.js:54:22)
+    at SlaAlertJob.query (C:\laragon\www\SistemaIncidencias\Backend\src\repositories\base\BaseRepository.ts:29:22)
+    at SlaAlertJob.getTicketsVencidos (C:\laragon\www\SistemaIncidencias\Backend\src\jobs\slaAlert.job.ts:150:34)
+    at SlaAlertJob.checkSlaAlerts (C:\laragon\www\SistemaIncidencias\Backend\src\jobs\slaAlert.job.ts:41:42)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Task._execution (C:\laragon\www\SistemaIncidencias\Backend\src\jobs\slaAlert.job.ts:362:7)
+2025-11-05 19:06:00 [error]: AppError: Token inválido

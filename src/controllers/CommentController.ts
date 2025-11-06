@@ -17,7 +17,7 @@ export class CommentController {
   list = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const ticketId = parseInt(req.params.ticketId);
-      const includeInternal = req.user?.rol_id && req.user.rol_id <= 3;
+      const includeInternal = req.user?.roleId && req.user.roleId <= 3;
 
       logger.info(`💬 Listando comentarios del ticket ${ticketId}`);
 
@@ -63,7 +63,7 @@ export class CommentController {
   create = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const ticketId = parseInt(req.params.ticketId);
-      const userId = req.user?.id;
+      const userId = req.user?.userId;
       const { comentario, es_interno, es_solucion } = req.body;
 
       if (!userId) {
@@ -80,7 +80,7 @@ export class CommentController {
       }
 
       // Solo técnicos pueden crear comentarios internos
-      const userRole = req.user?.rol_id;
+      const userRole = req.user?.roleId;
       const isInternal = es_interno && userRole && userRole <= 3;
 
       const commentData = {
@@ -135,7 +135,7 @@ export class CommentController {
   update = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const commentId = parseInt(req.params.id);
-      const userId = req.user?.id;
+      const userId = req.user?.roleId;
       const { comentario } = req.body;
 
       if (!userId) {
@@ -151,7 +151,7 @@ export class CommentController {
       }
 
       // Solo el autor puede editar (o admin)
-      const userRole = req.user?.rol_id;
+      const userRole = req.user?.roleId;
       const comment = existingComment as any;
 
       if (comment.usuario_id !== userId && userRole !== 1) {
@@ -188,7 +188,7 @@ export class CommentController {
   delete = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const commentId = parseInt(req.params.id);
-      const userId = req.user?.id;
+      const userId = req.user?.userId;
 
       if (!userId) {
         throw new AppError('Usuario no autenticado', 401);
@@ -203,7 +203,7 @@ export class CommentController {
       }
 
       const comment = existingComment as any;
-      const userRole = req.user?.rol_id;
+      const userRole = req.user?.roleId;
 
       if (comment.usuario_id !== userId && userRole !== 1) {
         throw new AppError('No tienes permiso para eliminar este comentario', 403);
@@ -226,7 +226,7 @@ export class CommentController {
   markAsSolution = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const commentId = parseInt(req.params.id);
-      const userId = req.user?.id;
+      const userId = req.user?.userId;
 
       if (!userId) {
         throw new AppError('Usuario no autenticado', 401);

@@ -9,7 +9,10 @@ import { rateLimitStrict } from '@middleware/rateLimit.middleware';
 import { 
   loginValidator, 
   registerValidator, 
-  refreshTokenValidator 
+  refreshTokenValidator,
+  loginDocumentoValidator, 
+  loginDocumentoSeguroValidator,
+  verificarDocumentoValidator 
 } from '@validators/auth.validator';
 
 const router = Router();
@@ -25,6 +28,42 @@ router.post(
   rateLimitStrict,
   validate(loginValidator),
   authController.login
+);
+
+/**
+ * @route   POST /api/auth/login-documento
+ * @desc    Login por documento de identidad
+ * @access  Public
+ */
+router.post(
+  '/login/documento',
+  rateLimitStrict,
+  validate(loginDocumentoValidator),
+  authController.loginPorDocumento
+);
+
+/**
+ * @route   POST /api/auth/login/documento-seguro
+ * @desc    Iniciar sesión con documento + código de validación
+ * @access  Public
+ */
+router.post(
+  '/login/documento-seguro',
+  rateLimitStrict,
+  validate(loginDocumentoSeguroValidator),
+  authController.loginPorDocumentoSeguro
+);
+
+/**
+ * @route   POST /api/auth/verificar-documento
+ * @desc    Verificar si un documento está registrado
+ * @access  Public
+ */
+router.post(
+  '/verificar-documento',
+  rateLimitStrict,
+  validate(verificarDocumentoValidator),
+  authController.verificarDocumento
 );
 
 /**

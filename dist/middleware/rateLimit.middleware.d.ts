@@ -1,6 +1,6 @@
-export declare const generalLimiter: any;
-export declare const authLimiter: any;
-export declare const strictLimiter: any;
-export declare const rateLimitStrict: any;
-export declare const rateLimitModerate: any;
+export declare const generalLimiter: import("express-rate-limit").RateLimitRequestHandler;
+export declare const authLimiter: import("express-rate-limit").RateLimitRequestHandler;
+export declare const strictLimiter: import("express-rate-limit").RateLimitRequestHandler;
+export declare const rateLimitStrict: import("express-rate-limit").RateLimitRequestHandler;
+export declare const rateLimitModerate: import("express-rate-limit").RateLimitRequestHandler;
 //# sourceMappingURL=rateLimit.middleware.d.ts.map

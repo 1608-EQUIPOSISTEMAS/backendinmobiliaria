@@ -67,3 +67,41 @@ export const forgotPasswordValidator: ValidationChain[] = [
     .withMessage('Email inválido')
     .normalizeEmail(),
 ];
+
+/**
+ * Validador para login por documento
+ */
+export const loginDocumentoValidator = [
+  body('documento')
+    .trim()
+    .notEmpty().withMessage('El documento es requerido')
+    .isLength({ min: 6, max: 20 }).withMessage('El documento debe tener entre 6 y 20 caracteres')
+    .matches(/^[a-zA-Z0-9-]+$/).withMessage('El documento solo puede contener letras, números y guiones')
+];
+
+/**
+ * Validador para login seguro por documento
+ */
+export const loginDocumentoSeguroValidator = [
+  body('documento')
+    .trim()
+    .notEmpty().withMessage('El documento es requerido')
+    .isLength({ min: 6, max: 20 }).withMessage('El documento debe tener entre 6 y 20 caracteres')
+    .matches(/^[a-zA-Z0-9-]+$/).withMessage('El documento solo puede contener letras, números y guiones'),
+  body('codigo')
+    .trim()
+    .notEmpty().withMessage('El código de validación es requerido')
+    .isLength({ min: 4, max: 6 }).withMessage('El código debe tener entre 4 y 6 caracteres')
+    .isAlphanumeric().withMessage('El código solo puede contener letras y números')
+];
+
+/**
+ * Validador para verificar documento
+ */
+export const verificarDocumentoValidator = [
+  body('documento')
+    .trim()
+    .notEmpty().withMessage('El documento es requerido')
+    .isLength({ min: 6, max: 20 }).withMessage('El documento debe tener entre 6 y 20 caracteres')
+    .matches(/^[a-zA-Z0-9-]+$/).withMessage('El documento solo puede contener letras, números y guiones')
+];

@@ -1,11 +1,14 @@
+// src/controllers/AuthController.ts
 import { Request, Response, NextFunction } from 'express';
 import { AuthService } from '@services/auth/AuthService';
 import { successResponse } from '@utils/response.util';
 import { logger } from '@utils/logger.util';
 import { AppError } from '@middleware/error.middleware';
+import { UserRepository } from '@repositories/UserRepository';
 
 export class AuthController {
   private authService: AuthService;
+  userRepository: UserRepository;
 
   constructor() {
     this.authService = new AuthService();
@@ -18,10 +21,18 @@ export class AuthController {
   login = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const { email, password } = req.body;
+      
+      // Obtener IP y User-Agent
+      const ipAddress = req.ip || req.headers['x-forwarded-for'] as string || 'unknown';
+      const userAgent = req.headers['user-agent'];
 
-      logger.info(`🔐 Intento de login: ${email}`);
+      logger.info(`🔐 Intento de login: ${email} desde IP: ${ipAddress}`);
 
-      const result = await this.authService.login({ email, password });
+      const result = await this.authService.login(
+        { email, password },
+        ipAddress,
+        userAgent
+      );
 
       logger.info(`✅ Login exitoso: ${email}`);
 
@@ -39,10 +50,18 @@ export class AuthController {
   register = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const userData = req.body;
+      
+      // Obtener IP y User-Agent
+      const ipAddress = req.ip || req.headers['x-forwarded-for'] as string || 'unknown';
+      const userAgent = req.headers['user-agent'];
 
       logger.info(`📝 Registrando usuario: ${userData.email}`);
 
-      const result = await this.authService.register(userData);
+      const result = await this.authService.register(
+        userData,
+        ipAddress,
+        userAgent
+      );
 
       logger.info(`✅ Usuario registrado: ${userData.email}`);
 
@@ -57,7 +76,7 @@ export class AuthController {
    * Refrescar token
    * POST /api/auth/refresh
    */
-  refresh = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  refreshToken = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const { refreshToken } = req.body;
 
@@ -82,7 +101,7 @@ export class AuthController {
    */
   logout = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const userId = (req as any).user?.id;
+      const userId = (req as any).user?.userId;
 
       if (!userId) {
         throw new AppError('Usuario no autenticado', 401);
@@ -90,12 +109,128 @@ export class AuthController {
 
       logger.info(`👋 Logout de usuario: ${userId}`);
 
-      // Por ahora solo retornamos éxito
-      // TODO: Implementar revocación de token si es necesario
+      await this.authService.logout(userId);
 
       res.json(successResponse(null, 'Logout exitoso'));
     } catch (error: any) {
       logger.error(`❌ Error en logout: ${error.message}`);
+      next(error);
+    }
+  };
+
+  /**
+   * Obtener información del usuario autenticado
+   * GET /api/auth/me
+   */
+  getMe = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const userId = (req as any).user?.userId;
+
+      if (!userId) {
+        throw new AppError('Usuario no autenticado', 401);
+      }
+
+      const user = await this.authService.getUserInfo(userId);
+
+      res.json(successResponse(user, 'Usuario obtenido'));
+    } catch (error: any) {
+      logger.error(`❌ Error al obtener usuario: ${error.message}`);
+      next(error);
+    }
+  };
+
+   /**
+   * Login por documento de identidad
+   * POST /api/auth/login/documento
+   */
+  loginPorDocumento = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const { documento } = req.body;
+
+      if (!documento) {
+        throw new AppError('Documento requerido', 400);
+      }
+
+      // Obtener IP y User-Agent
+      const ipAddress = req.ip || req.headers['x-forwarded-for'] as string || 'unknown';
+      const userAgent = req.headers['user-agent'];
+
+      logger.info(`🔐 Intento de login por documento desde IP: ${ipAddress}`);
+
+      const result = await this.authService.loginPorDocumento(
+        documento,
+        ipAddress,
+        userAgent
+      );
+
+      logger.info(`✅ Login exitoso por documento`);
+
+      res.json(successResponse(result, 'Login exitoso'));
+    } catch (error: any) {
+      logger.error(`❌ Error en login por documento: ${error.message}`);
+      next(error);
+    }
+  };
+
+  /**
+   * Login por documento con validación adicional (más seguro)
+   * POST /api/auth/login/documento-seguro
+   */
+  loginPorDocumentoSeguro = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const { documento, codigo } = req.body;
+
+      if (!documento || !codigo) {
+        throw new AppError('Documento y código de validación requeridos', 400);
+      }
+
+      // Obtener IP y User-Agent
+      const ipAddress = req.ip || req.headers['x-forwarded-for'] as string || 'unknown';
+      const userAgent = req.headers['user-agent'];
+
+      logger.info(`🔐 Intento de login seguro por documento desde IP: ${ipAddress}`);
+
+      const result = await this.authService.loginPorDocumentoSeguro(
+        documento,
+        codigo,
+        ipAddress,
+        userAgent
+      );
+
+      logger.info(`✅ Login seguro exitoso por documento`);
+
+      res.json(successResponse(result, 'Login exitoso'));
+    } catch (error: any) {
+      logger.error(`❌ Error en login seguro por documento: ${error.message}`);
+      next(error);
+    }
+  };
+
+  /**
+   * Verificar si un documento está registrado
+   * POST /api/auth/verificar-documento
+   */
+  verificarDocumento = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const { documento } = req.body;
+
+      if (!documento) {
+        throw new AppError('Documento requerido', 400);
+      }
+
+      logger.info(`🔍 Verificando documento`);
+
+      const existe = await this.userRepository.documentoExists(documento);
+
+      res.json(successResponse(
+        { 
+          existe,
+          mensaje: existe ? 'Documento registrado' : 'Documento no encontrado'
+        }, 
+        'Verificación completada'
+      ));
+    } catch (error: any) {
+      logger.error(`❌ Error al verificar documento: ${error.message}`);
       next(error);
     }
   };
@@ -106,7 +241,7 @@ export class AuthController {
    */
   changePassword = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const userId = (req as any).user?.id;
+      const userId = (req as any).user?.userId;
       const { currentPassword, newPassword } = req.body;
 
       if (!userId) {
@@ -125,73 +260,4 @@ export class AuthController {
       next(error);
     }
   };
-
-  /**
-   * Solicitar recuperación de contraseña
-   * POST /api/auth/forgot-password
-   */
-  forgotPassword = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    try {
-      const { email } = req.body;
-
-      logger.info(`📧 Solicitud de recuperación de contraseña: ${email}`);
-
-      // TODO: Implementar recuperación de contraseña
-
-      res.json(successResponse(null, 'Si el email existe, recibirás instrucciones de recuperación'));
-    } catch (error: any) {
-      logger.error(`❌ Error en recuperación de contraseña: ${error.message}`);
-      next(error);
-    }
-  };
-
-  /**
-   * Validar token
-   * POST /api/auth/validate
-   */
-  validateToken = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    try {
-      const { token } = req.body;
-
-      if (!token) {
-        throw new AppError('Token requerido', 400);
-      }
-
-      // TODO: Implementar validación de token
-      const isValid = true;
-
-      res.json(successResponse({ valid: isValid }, 'Token validado'));
-    } catch (error: any) {
-      logger.error(`❌ Error al validar token: ${error.message}`);
-      next(error);
-    }
-  };
-
-  /**
-   * Obtener perfil del usuario actual
-   * GET /api/auth/me
-   */
-  getProfile = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    try {
-      const userId = (req as any).user?.id;
-
-      if (!userId) {
-        throw new AppError('Usuario no autenticado', 401);
-      }
-
-      logger.info(`👤 Obteniendo perfil del usuario: ${userId}`);
-
-      // TODO: Implementar obtención de perfil
-      const user = { id: userId };
-
-      res.json(successResponse(user, 'Perfil obtenido'));
-    } catch (error: any) {
-      logger.error(`❌ Error al obtener perfil: ${error.message}`);
-      next(error);
-    }
-  };
-
-  // Alias para compatibilidad con rutas
-  refreshToken = this.refresh;
-  getMe = this.getProfile;
 }

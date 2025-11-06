@@ -3,3 +3,5 @@ package-lock.json
 .env.example
 
 src/config/environment.config.ts
+
+dist/config/environment.config.tsgit 

@@ -42,5 +42,7 @@ export declare class AuthController {
      * GET /api/auth/me
      */
     getProfile: (req: Request, res: Response, next: NextFunction) => Promise<void>;
+    refreshToken: (req: Request, res: Response, next: NextFunction) => Promise<void>;
+    getMe: (req: Request, res: Response, next: NextFunction) => Promise<void>;
 }
 //# sourceMappingURL=AuthController.d.ts.map

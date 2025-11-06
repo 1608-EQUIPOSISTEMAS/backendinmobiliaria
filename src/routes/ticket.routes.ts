@@ -16,8 +16,8 @@ import {
   createTicketValidator, 
   updateTicketValidator,
   assignTicketValidator,
-  changeStatusValidator,
-  addCommentValidator
+  changeStatusValidator
+  // ❌ REMOVER addCommentValidator - no existe aquí
 } from '@validators/ticket.validator';
 
 const router = Router();
@@ -64,8 +64,8 @@ router.get(
 
 /**
  * @route   GET /api/tickets/:id
- * @desc    Obtener detalle de ticket
- * @access  Private (tickets.ver_propios o tickets.ver_todos)
+ * @desc    Obtener ticket por ID
+ * @access  Private
  */
 router.get(
   '/:id',
@@ -77,13 +77,13 @@ router.get(
 /**
  * @route   PATCH /api/tickets/:id
  * @desc    Actualizar ticket
- * @access  Private (tickets.editar_propios o tickets.editar_todos)
+ * @access  Private (tickets.editar)
  */
 router.patch(
   '/:id',
   validateId('id'),
   validate(updateTicketValidator),
-  requireAnyPermission('tickets.editar_propios', 'tickets.editar_todos'),
+  requirePermission('tickets.editar'),
   ticketController.update
 );
 
@@ -101,7 +101,7 @@ router.delete(
 
 /**
  * @route   POST /api/tickets/:id/assign
- * @desc    Asignar ticket a técnico
+ * @desc    Asignar técnico a ticket
  * @access  Private (tickets.asignar)
  */
 router.post(
@@ -115,31 +115,19 @@ router.post(
 /**
  * @route   PATCH /api/tickets/:id/status
  * @desc    Cambiar estado del ticket
- * @access  Private (tickets.cambiar_estado)
+ * @access  Private (tickets.editar)
  */
 router.patch(
   '/:id/status',
   validateId('id'),
   validate(changeStatusValidator),
-  requirePermission('tickets.cambiar_estado'),
+  requireAnyPermission('tickets.editar', 'tickets.resolver'),
   ticketController.changeStatus
 );
 
 /**
- * @route   POST /api/tickets/:id/take
- * @desc    Auto-asignarse un ticket (solo técnicos)
- * @access  Private (técnico activo)
- */
-router.post(
-  '/:id/take',
-  validateId('id'),
-  requireTechnician,
-  ticketController.takeTicket
-);
-
-/**
  * @route   GET /api/tickets/:id/similar
- * @desc    Obtener tickets similares (detección de duplicados)
+ * @desc    Obtener tickets similares
  * @access  Private
  */
 router.get(
@@ -150,72 +138,14 @@ router.get(
 
 /**
  * @route   GET /api/tickets/:id/history
- * @desc    Obtener historial de cambios del ticket
+ * @desc    Obtener historial de cambios
  * @access  Private
  */
 router.get(
   '/:id/history',
   validateId('id'),
+  requireAnyPermission('tickets.ver_propios', 'tickets.ver_todos'),
   ticketController.getHistory
-);
-
-/**
- * @route   POST /api/tickets/:id/comments
- * @desc    Agregar comentario al ticket
- * @access  Private
- */
-router.post(
-  '/:id/comments',
-  validateId('id'),
-  validate(addCommentValidator),
-  ticketController.addComment
-);
-
-/**
- * @route   GET /api/tickets/:id/comments
- * @desc    Obtener comentarios del ticket
- * @access  Private
- */
-router.get(
-  '/:id/comments',
-  validateId('id'),
-  ticketController.getComments
-);
-
-/**
- * @route   POST /api/tickets/:id/resolve
- * @desc    Marcar ticket como resuelto
- * @access  Private (técnico asignado o supervisor)
- */
-router.post(
-  '/:id/resolve',
-  validateId('id'),
-  requireAnyPermission('tickets.resolver', 'tickets.editar_todos'),
-  ticketController.resolve
-);
-
-/**
- * @route   POST /api/tickets/:id/close
- * @desc    Cerrar ticket
- * @access  Private (tickets.cerrar)
- */
-router.post(
-  '/:id/close',
-  validateId('id'),
-  requirePermission('tickets.cerrar'),
-  ticketController.close
-);
-
-/**
- * @route   POST /api/tickets/:id/reopen
- * @desc    Reabrir ticket cerrado
- * @access  Private (tickets.reabrir)
- */
-router.post(
-  '/:id/reopen',
-  validateId('id'),
-  requirePermission('tickets.reabrir'),
-  ticketController.reopen
 );
 
 export default router;

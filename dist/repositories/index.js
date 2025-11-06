@@ -20,5 +20,4 @@ __exportStar(require("./TicketRepository"), exports);
 __exportStar(require("./AreaRepository"), exports);
 __exportStar(require("./CategoryRepository"), exports);
 __exportStar(require("./CommentRepository"), exports);
-__exportStar(require("./CommentRepository"), exports);
 //# sourceMappingURL=index.js.map

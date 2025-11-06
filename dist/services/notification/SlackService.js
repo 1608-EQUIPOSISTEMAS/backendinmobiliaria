@@ -395,6 +395,52 @@ class SlackService {
             logger_util_1.logger.error('Error al enviar mensaje Slack:', error);
         }
     }
+    /**
+     * 🆕 Enviar mensaje directo (DM) a un usuario
+     */
+    async sendDirectMessage(slackUserId, text) {
+        if (!this.isEnabled()) {
+            logger_util_1.logger.warn('Slack no está configurado');
+            return;
+        }
+        try {
+            await this.client.chat.postMessage({
+                channel: slackUserId,
+                text: text,
+                mrkdwn: true,
+            });
+            logger_util_1.logger.info(`✅ DM enviado a usuario Slack: ${slackUserId}`);
+        }
+        catch (error) {
+            logger_util_1.logger.error(`Error enviando DM a ${slackUserId}:`, error);
+            throw error;
+        }
+    }
+    /**
+     * 🆕 Enviar mensaje a un canal
+     */
+    async sendChannelMessage(channel, text, blocks) {
+        if (!this.isEnabled()) {
+            logger_util_1.logger.warn('Slack no está configurado');
+            return;
+        }
+        try {
+            const message = {
+                channel: channel,
+                text: text,
+                mrkdwn: true,
+            };
+            if (blocks) {
+                message.blocks = blocks;
+            }
+            await this.client.chat.postMessage(message);
+            logger_util_1.logger.info(`✅ Mensaje enviado al canal: ${channel}`);
+        }
+        catch (error) {
+            logger_util_1.logger.error(`Error enviando mensaje al canal ${channel}:`, error);
+            throw error;
+        }
+    }
 }
 exports.SlackService = SlackService;
 //# sourceMappingURL=SlackService.js.map

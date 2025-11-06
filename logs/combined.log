@@ -1,0 +1,492 @@
+2025-11-03 16:16:10 [info]: ✅ Middlewares inicializados
+2025-11-03 16:16:10 [info]: ✅ Rutas inicializadas
+2025-11-03 16:16:10 [info]: ✅ Manejo de errores configurado
+2025-11-03 16:16:11 [info]: 🚀 Iniciando jobs automáticos...
+2025-11-03 16:16:11 [info]: ✅ SLA Alert Job iniciado - Schedule: 0 * * * *
+2025-11-03 16:16:11 [info]: ✅ Metric Calculation Job iniciado - Schedule: 0 0 * * *
+2025-11-03 16:16:11 [info]: ✅ Todos los jobs iniciados correctamente
+2025-11-03 16:16:11 [info]: 🚀 Servidor corriendo en puerto 3000
+2025-11-03 16:16:11 [info]: 📝 Ambiente: development
+2025-11-03 16:16:11 [info]: 🔗 API: http://localhost:3000/api
+2025-11-03 16:16:11 [info]: ❤️  Health: http://localhost:3000/health
+2025-11-03 16:16:11 [info]: ⏰ Jobs automáticos: Activos
+2025-11-03 16:21:53 [info]: ✅ Middlewares inicializados
+2025-11-03 16:21:53 [info]: ✅ Rutas inicializadas
+2025-11-03 16:21:53 [info]: ✅ Manejo de errores configurado
+2025-11-03 16:21:54 [info]: 🚀 Iniciando jobs automáticos...
+2025-11-03 16:21:54 [info]: ✅ SLA Alert Job iniciado - Schedule: 0 * * * *
+2025-11-03 16:21:54 [info]: ✅ Metric Calculation Job iniciado - Schedule: 0 0 * * *
+2025-11-03 16:21:54 [info]: ✅ Todos los jobs iniciados correctamente
+2025-11-03 16:21:54 [info]: 🚀 Servidor corriendo en puerto 3000
+2025-11-03 16:21:54 [info]: 📝 Ambiente: development
+2025-11-03 16:21:54 [info]: 🔗 API: http://localhost:3000/api
+2025-11-03 16:21:54 [info]: ❤️  Health: http://localhost:3000/health
+2025-11-03 16:21:54 [info]: ⏰ Jobs automáticos: Activos
+2025-11-03 16:22:29 [info]: ✅ Middlewares inicializados
+2025-11-03 16:22:29 [info]: ✅ Rutas inicializadas
+2025-11-03 16:22:29 [info]: ✅ Manejo de errores configurado
+2025-11-03 16:22:29 [info]: 🚀 Iniciando jobs automáticos...
+2025-11-03 16:22:29 [info]: ✅ SLA Alert Job iniciado - Schedule: 0 * * * *
+2025-11-03 16:22:29 [info]: ✅ Metric Calculation Job iniciado - Schedule: 0 0 * * *
+2025-11-03 16:22:29 [info]: ✅ Todos los jobs iniciados correctamente
+2025-11-03 16:22:29 [info]: 🚀 Servidor corriendo en puerto 3000
+2025-11-03 16:22:29 [info]: 📝 Ambiente: development
+2025-11-03 16:22:29 [info]: 🔗 API: http://localhost:3000/api
+2025-11-03 16:22:29 [info]: ❤️  Health: http://localhost:3000/health
+2025-11-03 16:22:29 [info]: ⏰ Jobs automáticos: Activos
+2025-11-03 17:46:33 [info]: ✅ Middlewares inicializados
+2025-11-03 17:46:33 [info]: ✅ Rutas inicializadas
+2025-11-03 17:46:33 [info]: ✅ Manejo de errores configurado
+2025-11-03 17:46:33 [info]: 🚀 Iniciando jobs automáticos...
+2025-11-03 17:46:33 [info]: ✅ SLA Alert Job iniciado - Schedule: 0 * * * *
+2025-11-03 17:46:33 [info]: ✅ Metric Calculation Job iniciado - Schedule: 0 0 * * *
+2025-11-03 17:46:33 [info]: ✅ Todos los jobs iniciados correctamente
+2025-11-03 17:46:33 [info]: 🚀 Servidor corriendo en puerto 3000
+2025-11-03 17:46:33 [info]: 📝 Ambiente: development
+2025-11-03 17:46:33 [info]: 🔗 API: http://localhost:3000/api
+2025-11-03 17:46:33 [info]: ❤️  Health: http://localhost:3000/health
+2025-11-03 17:46:33 [info]: ⏰ Jobs automáticos: Activos
+2025-11-03 17:56:58 [info]: ✅ Middlewares inicializados
+2025-11-03 17:56:58 [info]: ✅ Rutas inicializadas
+2025-11-03 17:56:58 [info]: ✅ Manejo de errores configurado
+2025-11-03 17:56:59 [info]: 🚀 Iniciando jobs automáticos...
+2025-11-03 17:56:59 [info]: ✅ SLA Alert Job iniciado - Schedule: 0 * * * *
+2025-11-03 17:56:59 [info]: ✅ Metric Calculation Job iniciado - Schedule: 0 0 * * *
+2025-11-03 17:56:59 [info]: ✅ Todos los jobs iniciados correctamente
+2025-11-03 17:56:59 [info]: 🚀 Servidor corriendo en puerto 3000
+2025-11-03 17:56:59 [info]: 📝 Ambiente: development
+2025-11-03 17:56:59 [info]: 🔗 API: http://localhost:3000/api
+2025-11-03 17:56:59 [info]: ❤️  Health: http://localhost:3000/health
+2025-11-03 17:56:59 [info]: ⏰ Jobs automáticos: Activos
+2025-11-03 17:57:25 [info]: ✅ Middlewares inicializados
+2025-11-03 17:57:25 [info]: ✅ Rutas inicializadas
+2025-11-03 17:57:25 [info]: ✅ Manejo de errores configurado
+2025-11-03 17:57:26 [info]: 🚀 Iniciando jobs automáticos...
+2025-11-03 17:57:26 [info]: ✅ SLA Alert Job iniciado - Schedule: 0 * * * *
+2025-11-03 17:57:26 [info]: ✅ Metric Calculation Job iniciado - Schedule: 0 0 * * *
+2025-11-03 17:57:26 [info]: ✅ Todos los jobs iniciados correctamente
+2025-11-03 17:57:26 [info]: 🚀 Servidor corriendo en puerto 3000
+2025-11-03 17:57:26 [info]: 📝 Ambiente: development
+2025-11-03 17:57:26 [info]: 🔗 API: http://localhost:3000/api
+2025-11-03 17:57:26 [info]: ❤️  Health: http://localhost:3000/health
+2025-11-03 17:57:26 [info]: ⏰ Jobs automáticos: Activos
+2025-11-03 17:58:06 [info]: ✅ Middlewares inicializados
+2025-11-03 17:58:06 [info]: ✅ Rutas inicializadas
+2025-11-03 17:58:06 [info]: ✅ Manejo de errores configurado
+2025-11-03 17:58:06 [info]: 🚀 Iniciando jobs automáticos...
+2025-11-03 17:58:06 [info]: ✅ SLA Alert Job iniciado - Schedule: 0 * * * *
+2025-11-03 17:58:06 [info]: ✅ Metric Calculation Job iniciado - Schedule: 0 0 * * *
+2025-11-03 17:58:06 [info]: ✅ Todos los jobs iniciados correctamente
+2025-11-03 17:58:06 [info]: 🚀 Servidor corriendo en puerto 3000
+2025-11-03 17:58:06 [info]: 📝 Ambiente: development
+2025-11-03 17:58:06 [info]: 🔗 API: http://localhost:3000/api
+2025-11-03 17:58:06 [info]: ❤️  Health: http://localhost:3000/health
+2025-11-03 17:58:06 [info]: ⏰ Jobs automáticos: Activos
+2025-11-03 17:58:25 [info]: ✅ Middlewares inicializados
+2025-11-03 17:58:25 [info]: ✅ Rutas inicializadas
+2025-11-03 17:58:25 [info]: ✅ Manejo de errores configurado
+2025-11-03 17:58:25 [info]: 🚀 Iniciando jobs automáticos...
+2025-11-03 17:58:25 [info]: ✅ SLA Alert Job iniciado - Schedule: 0 * * * *
+2025-11-03 17:58:25 [info]: ✅ Metric Calculation Job iniciado - Schedule: 0 0 * * *
+2025-11-03 17:58:25 [info]: ✅ Todos los jobs iniciados correctamente
+2025-11-03 17:58:25 [info]: 🚀 Servidor corriendo en puerto 3000
+2025-11-03 17:58:25 [info]: 📝 Ambiente: development
+2025-11-03 17:58:25 [info]: 🔗 API: http://localhost:3000/api
+2025-11-03 17:58:25 [info]: ❤️  Health: http://localhost:3000/health
+2025-11-03 17:58:25 [info]: ⏰ Jobs automáticos: Activos
+2025-11-03 18:00:00 [info]: 🔔 Iniciando verificación de SLA...
+2025-11-03 18:00:00 [error]: Error: Unknown column 'a.slack_channel_id' in 'field list'
+    at PromisePool.execute (C:\laragon\www\SistemaIncidencias\Backend\node_modules\mysql2\lib\promise\pool.js:54:22)
+    at SlaAlertJob.query (C:\laragon\www\SistemaIncidencias\Backend\src\repositories\base\BaseRepository.ts:29:22)
+    at SlaAlertJob.getTicketsProximosVencerRespuesta (C:\laragon\www\SistemaIncidencias\Backend\src\jobs\slaAlert.job.ts:77:34)
+    at SlaAlertJob.checkSlaAlerts (C:\laragon\www\SistemaIncidencias\Backend\src\jobs\slaAlert.job.ts:35:51)
+    at Task._execution (C:\laragon\www\SistemaIncidencias\Backend\src\jobs\slaAlert.job.ts:385:18)
+    at Task.execute (C:\laragon\www\SistemaIncidencias\Backend\node_modules\node-cron\src\task.js:17:25)
+    at ScheduledTask.now (C:\laragon\www\SistemaIncidencias\Backend\node_modules\node-cron\src\scheduled-task.js:38:33)
+    at Scheduler.<anonymous> (C:\laragon\www\SistemaIncidencias\Backend\node_modules\node-cron\src\scheduled-task.js:25:18)
+    at Scheduler.emit (node:events:508:28)
+    at Scheduler.emit (node:domain:489:12)
+2025-11-03 18:01:03 [info]: ✅ Middlewares inicializados
+2025-11-03 18:01:03 [info]: ✅ Rutas inicializadas
+2025-11-03 18:01:03 [info]: ✅ Manejo de errores configurado
+2025-11-03 18:01:04 [info]: 🚀 Iniciando jobs automáticos...
+2025-11-03 18:01:04 [info]: ✅ SLA Alert Job iniciado - Schedule: 0 * * * *
+2025-11-03 18:01:04 [info]: ✅ Metric Calculation Job iniciado - Schedule: 0 0 * * *
+2025-11-03 18:01:04 [info]: ✅ Todos los jobs iniciados correctamente
+2025-11-03 18:01:04 [info]: 🚀 Servidor corriendo en puerto 3000
+2025-11-03 18:01:04 [info]: 📝 Ambiente: development
+2025-11-03 18:01:04 [info]: 🔗 API: http://localhost:3000/api
+2025-11-03 18:01:04 [info]: ❤️  Health: http://localhost:3000/health
+2025-11-03 18:01:04 [info]: ⏰ Jobs automáticos: Activos
+2025-11-03 18:01:54 [info]: ✅ Middlewares inicializados
+2025-11-03 18:01:54 [info]: ✅ Rutas inicializadas
+2025-11-03 18:01:54 [info]: ✅ Manejo de errores configurado
+2025-11-03 18:01:54 [info]: 🚀 Iniciando jobs automáticos...
+2025-11-03 18:01:54 [info]: ✅ SLA Alert Job iniciado - Schedule: 0 * * * *
+2025-11-03 18:01:54 [info]: ✅ Metric Calculation Job iniciado - Schedule: 0 0 * * *
+2025-11-03 18:01:54 [info]: ✅ Todos los jobs iniciados correctamente
+2025-11-03 18:01:54 [info]: 🚀 Servidor corriendo en puerto 3000
+2025-11-03 18:01:54 [info]: 📝 Ambiente: development
+2025-11-03 18:01:54 [info]: 🔗 API: http://localhost:3000/api
+2025-11-03 18:01:54 [info]: ❤️  Health: http://localhost:3000/health
+2025-11-03 18:01:54 [info]: ⏰ Jobs automáticos: Activos
+2025-11-03 18:02:49 [info]: ✅ Middlewares inicializados
+2025-11-03 18:02:49 [info]: ✅ Rutas inicializadas
+2025-11-03 18:02:49 [info]: ✅ Manejo de errores configurado
+2025-11-03 18:02:50 [info]: 🚀 Iniciando jobs automáticos...
+2025-11-03 18:02:50 [info]: ✅ SLA Alert Job iniciado - Schedule: 0 * * * *
+2025-11-03 18:02:50 [info]: ✅ Metric Calculation Job iniciado - Schedule: 0 0 * * *
+2025-11-03 18:02:50 [info]: ✅ Todos los jobs iniciados correctamente
+2025-11-03 18:02:50 [info]: 🚀 Servidor corriendo en puerto 3000
+2025-11-03 18:02:50 [info]: 📝 Ambiente: development
+2025-11-03 18:02:50 [info]: 🔗 API: http://localhost:3000/api
+2025-11-03 18:02:50 [info]: ❤️  Health: http://localhost:3000/health
+2025-11-03 18:02:50 [info]: ⏰ Jobs automáticos: Activos
+2025-11-03 18:03:54 [info]: ✅ Middlewares inicializados
+2025-11-03 18:03:54 [info]: ✅ Rutas inicializadas
+2025-11-03 18:03:54 [info]: ✅ Manejo de errores configurado
+2025-11-03 18:03:55 [info]: 🚀 Iniciando jobs automáticos...
+2025-11-03 18:03:55 [info]: ✅ SLA Alert Job iniciado - Schedule: 0 * * * *
+2025-11-03 18:03:55 [info]: ✅ Metric Calculation Job iniciado - Schedule: 0 0 * * *
+2025-11-03 18:03:55 [info]: ✅ Todos los jobs iniciados correctamente
+2025-11-03 18:03:55 [info]: 🚀 Servidor corriendo en puerto 3000
+2025-11-03 18:03:55 [info]: 📝 Ambiente: development
+2025-11-03 18:03:55 [info]: 🔗 API: http://localhost:3000/api
+2025-11-03 18:03:55 [info]: ❤️  Health: http://localhost:3000/health
+2025-11-03 18:03:55 [info]: ⏰ Jobs automáticos: Activos
+2025-11-03 18:03:57 [info]: ✅ Middlewares inicializados
+2025-11-03 18:03:57 [info]: ✅ Rutas inicializadas
+2025-11-03 18:03:57 [info]: ✅ Manejo de errores configurado
+2025-11-03 18:03:58 [info]: 🚀 Iniciando jobs automáticos...
+2025-11-03 18:03:58 [info]: ✅ SLA Alert Job iniciado - Schedule: 0 * * * *
+2025-11-03 18:03:58 [info]: ✅ Metric Calculation Job iniciado - Schedule: 0 0 * * *
+2025-11-03 18:03:58 [info]: ✅ Todos los jobs iniciados correctamente
+2025-11-03 18:03:58 [info]: 🚀 Servidor corriendo en puerto 3000
+2025-11-03 18:03:58 [info]: 📝 Ambiente: development
+2025-11-03 18:03:58 [info]: 🔗 API: http://localhost:3000/api
+2025-11-03 18:03:58 [info]: ❤️  Health: http://localhost:3000/health
+2025-11-03 18:03:58 [info]: ⏰ Jobs automáticos: Activos
+2025-11-03 18:04:08 [info]: ✅ Middlewares inicializados
+2025-11-03 18:04:08 [info]: ✅ Rutas inicializadas
+2025-11-03 18:04:08 [info]: ✅ Manejo de errores configurado
+2025-11-03 18:04:09 [info]: 🚀 Iniciando jobs automáticos...
+2025-11-03 18:04:09 [info]: ✅ SLA Alert Job iniciado - Schedule: 0 * * * *
+2025-11-03 18:04:09 [info]: ✅ Metric Calculation Job iniciado - Schedule: 0 0 * * *
+2025-11-03 18:04:09 [info]: ✅ Todos los jobs iniciados correctamente
+2025-11-03 18:04:09 [info]: 🚀 Servidor corriendo en puerto 3000
+2025-11-03 18:04:09 [info]: 📝 Ambiente: development
+2025-11-03 18:04:09 [info]: 🔗 API: http://localhost:3000/api
+2025-11-03 18:04:09 [info]: ❤️  Health: http://localhost:3000/health
+2025-11-03 18:04:09 [info]: ⏰ Jobs automáticos: Activos
+2025-11-03 18:33:58 [info]: ✅ Middlewares inicializados
+2025-11-03 18:33:58 [info]: ✅ Rutas inicializadas
+2025-11-03 18:33:58 [info]: ✅ Manejo de errores configurado
+2025-11-03 18:33:59 [info]: 🚀 Iniciando jobs automáticos...
+2025-11-03 18:33:59 [info]: ✅ SLA Alert Job iniciado - Schedule: 0 * * * *
+2025-11-03 18:33:59 [info]: ✅ Metric Calculation Job iniciado - Schedule: 0 0 * * *
+2025-11-03 18:33:59 [info]: ✅ Todos los jobs iniciados correctamente
+2025-11-03 18:33:59 [info]: 🚀 Servidor corriendo en puerto 3000
+2025-11-03 18:33:59 [info]: 📝 Ambiente: development
+2025-11-03 18:33:59 [info]: 🔗 API: http://localhost:3000/api
+2025-11-03 18:33:59 [info]: ❤️  Health: http://localhost:3000/health
+2025-11-03 18:33:59 [info]: ⏰ Jobs automáticos: Activos
+2025-11-04 08:44:37 [info]: ✅ Middlewares inicializados
+2025-11-04 08:44:37 [info]: ✅ Rutas inicializadas
+2025-11-04 08:44:37 [info]: ✅ Manejo de errores configurado
+2025-11-04 08:44:37 [info]: 🚀 Iniciando jobs automáticos...
+2025-11-04 08:44:37 [info]: ✅ SLA Alert Job iniciado - Schedule: 0 * * * *
+2025-11-04 08:44:37 [info]: ✅ Metric Calculation Job iniciado - Schedule: 0 0 * * *
+2025-11-04 08:44:37 [info]: ✅ Todos los jobs iniciados correctamente
+2025-11-04 08:44:37 [info]: 🚀 Servidor corriendo en puerto 3000
+2025-11-04 08:44:37 [info]: 📝 Ambiente: development
+2025-11-04 08:44:37 [info]: 🔗 API: http://localhost:3000/api
+2025-11-04 08:44:37 [info]: ❤️  Health: http://localhost:3000/health
+2025-11-04 08:44:37 [info]: ⏰ Jobs automáticos: Activos
+2025-11-04 08:51:35 [info]: 🔐 Intento de login: admin@we.com
+2025-11-04 08:51:36 [error]: ❌ Error en login: Credenciales inválidas
+2025-11-04 08:51:36 [error]: AppError: Credenciales inválidas
+2025-11-04 08:51:49 [info]: 🔐 Intento de login: admin@we.com
+2025-11-04 08:51:49 [error]: ❌ Error en login: Credenciales inválidas
+2025-11-04 08:51:49 [error]: AppError: Credenciales inválidas
+2025-11-04 08:51:58 [warn]: Errores de validación:
+2025-11-04 08:51:58 [error]: AppError: Errores de validación
+2025-11-04 08:58:11 [info]: ✅ Middlewares inicializados
+2025-11-04 08:58:11 [info]: ✅ Rutas inicializadas
+2025-11-04 08:58:11 [info]: ✅ Manejo de errores configurado
+2025-11-04 08:58:12 [info]: 🚀 Iniciando jobs automáticos...
+2025-11-04 08:58:12 [info]: ✅ SLA Alert Job iniciado - Schedule: 0 * * * *
+2025-11-04 08:58:12 [info]: ✅ Metric Calculation Job iniciado - Schedule: 0 0 * * *
+2025-11-04 08:58:12 [info]: ✅ Todos los jobs iniciados correctamente
+2025-11-04 08:58:12 [info]: 🚀 Servidor corriendo en puerto 3000
+2025-11-04 08:58:12 [info]: 📝 Ambiente: development
+2025-11-04 08:58:12 [info]: 🔗 API: http://localhost:3000/api
+2025-11-04 08:58:12 [info]: ❤️  Health: http://localhost:3000/health
+2025-11-04 08:58:12 [info]: ⏰ Jobs automáticos: Activos
+2025-11-04 08:58:21 [error]: AppError: Errores de validación
+2025-11-04 09:00:00 [info]: 🔔 Iniciando verificación de SLA...
+2025-11-04 09:00:00 [error]: Error: Unknown column 'a.slack_channel_id' in 'field list'
+    at PromisePool.execute (C:\laragon\www\SistemaIncidencias\Backend\node_modules\mysql2\lib\promise\pool.js:54:22)
+    at SlaAlertJob.query (C:\laragon\www\SistemaIncidencias\Backend\src\repositories\base\BaseRepository.ts:29:22)
+    at SlaAlertJob.getTicketsProximosVencerRespuesta (C:\laragon\www\SistemaIncidencias\Backend\src\jobs\slaAlert.job.ts:77:34)
+    at SlaAlertJob.checkSlaAlerts (C:\laragon\www\SistemaIncidencias\Backend\src\jobs\slaAlert.job.ts:35:51)
+    at Task._execution (C:\laragon\www\SistemaIncidencias\Backend\src\jobs\slaAlert.job.ts:385:18)
+    at Task.execute (C:\laragon\www\SistemaIncidencias\Backend\node_modules\node-cron\src\task.js:17:25)
+    at ScheduledTask.now (C:\laragon\www\SistemaIncidencias\Backend\node_modules\node-cron\src\scheduled-task.js:38:33)
+    at Scheduler.<anonymous> (C:\laragon\www\SistemaIncidencias\Backend\node_modules\node-cron\src\scheduled-task.js:25:18)
+    at Scheduler.emit (node:events:508:28)
+    at Scheduler.emit (node:domain:489:12)
+2025-11-04 09:08:35 [info]: ✅ Middlewares inicializados
+2025-11-04 09:08:35 [info]: ✅ Rutas inicializadas
+2025-11-04 09:08:35 [info]: ✅ Manejo de errores configurado
+2025-11-04 09:08:35 [info]: 🚀 Iniciando jobs automáticos...
+2025-11-04 09:08:35 [info]: ✅ SLA Alert Job iniciado - Schedule: 0 * * * *
+2025-11-04 09:08:35 [info]: ✅ Metric Calculation Job iniciado - Schedule: 0 0 * * *
+2025-11-04 09:08:35 [info]: ✅ Todos los jobs iniciados correctamente
+2025-11-04 09:08:35 [info]: 🚀 Servidor corriendo en puerto 3000
+2025-11-04 09:08:35 [info]: 📝 Ambiente: development
+2025-11-04 09:08:35 [info]: 🔗 API: http://localhost:3000/api
+2025-11-04 09:08:35 [info]: ❤️  Health: http://localhost:3000/health
+2025-11-04 09:08:35 [info]: ⏰ Jobs automáticos: Activos
+2025-11-04 09:13:53 [info]: 🔐 Intento de login: admin@we.com
+2025-11-04 09:13:54 [error]: ❌ Error al guardar refresh token: Unknown column 'expira_en' in 'field list'
+2025-11-04 09:13:54 [error]: ❌ Error en login: Error al guardar token
+2025-11-04 09:13:54 [error]: AppError: Error al guardar token
+2025-11-04 09:19:25 [info]: 🔐 Intento de login: admin@we.com
+2025-11-04 09:19:26 [error]: ❌ Error al guardar refresh token: Field 'token_hash' doesn't have a default value
+2025-11-04 09:19:26 [error]: ❌ Error en login: Error al guardar token
+2025-11-04 09:19:26 [error]: AppError: Error al guardar token
+2025-11-04 10:45:52 [info]: ✅ Middlewares inicializados
+2025-11-04 10:45:52 [info]: ✅ Rutas inicializadas
+2025-11-04 10:45:52 [info]: ✅ Manejo de errores configurado
+2025-11-04 10:45:52 [info]: 🚀 Iniciando jobs automáticos...
+2025-11-04 10:45:52 [info]: ✅ SLA Alert Job iniciado - Schedule: 0 * * * *
+2025-11-04 10:45:52 [info]: ✅ Metric Calculation Job iniciado - Schedule: 0 0 * * *
+2025-11-04 10:45:52 [info]: ✅ Todos los jobs iniciados correctamente
+2025-11-04 10:45:52 [info]: 🚀 Servidor corriendo en puerto 3000
+2025-11-04 10:45:52 [info]: 📝 Ambiente: development
+2025-11-04 10:45:52 [info]: 🔗 API: http://localhost:3000/api
+2025-11-04 10:45:52 [info]: ❤️  Health: http://localhost:3000/health
+2025-11-04 10:45:52 [info]: ⏰ Jobs automáticos: Activos
+2025-11-04 10:46:05 [info]: 🔐 Intento de login: admin@we.com desde IP: ::1
+2025-11-04 10:46:05 [error]: Error: Field 'expira_en' doesn't have a default value
+    at PromisePool.execute (C:\laragon\www\SistemaIncidencias\Backend\node_modules\mysql2\lib\promise\pool.js:54:22)
+    at UserRepository.execute (C:\laragon\www\SistemaIncidencias\Backend\src\repositories\base\BaseRepository.ts:41:38)
+    at UserRepository.saveRefreshToken (C:\laragon\www\SistemaIncidencias\Backend\src\repositories\UserRepository.ts:232:18)
+    at AuthService.login (C:\laragon\www\SistemaIncidencias\Backend\src\services\auth\AuthService.ts:43:31)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async AuthController.login (C:\laragon\www\SistemaIncidencias\Backend\src\controllers\AuthController.ts:31:22)
+2025-11-04 10:46:05 [error]: ❌ Error en login: Error al guardar token
+2025-11-04 10:46:05 [error]: AppError: Error al guardar token
+2025-11-04 10:47:25 [info]: 🔐 Intento de login: admin@we.com desde IP: ::1
+2025-11-04 10:47:26 [error]: Error: Field 'expira_en' doesn't have a default value
+    at PromisePool.execute (C:\laragon\www\SistemaIncidencias\Backend\node_modules\mysql2\lib\promise\pool.js:54:22)
+    at UserRepository.execute (C:\laragon\www\SistemaIncidencias\Backend\src\repositories\base\BaseRepository.ts:41:38)
+    at UserRepository.saveRefreshToken (C:\laragon\www\SistemaIncidencias\Backend\src\repositories\UserRepository.ts:232:18)
+    at AuthService.login (C:\laragon\www\SistemaIncidencias\Backend\src\services\auth\AuthService.ts:43:31)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async AuthController.login (C:\laragon\www\SistemaIncidencias\Backend\src\controllers\AuthController.ts:31:22)
+2025-11-04 10:47:26 [error]: ❌ Error en login: Error al guardar token
+2025-11-04 10:47:26 [error]: AppError: Error al guardar token
+2025-11-04 11:00:00 [info]: 🔔 Iniciando verificación de SLA...
+2025-11-04 11:00:00 [error]: Error: Unknown column 'ss.fecha_primera_respuesta' in 'where clause'
+    at PromisePool.execute (C:\laragon\www\SistemaIncidencias\Backend\node_modules\mysql2\lib\promise\pool.js:54:22)
+    at SlaAlertJob.query (C:\laragon\www\SistemaIncidencias\Backend\src\repositories\base\BaseRepository.ts:29:22)
+    at SlaAlertJob.getTicketsProximosVencerRespuesta (C:\laragon\www\SistemaIncidencias\Backend\src\jobs\slaAlert.job.ts:77:34)
+    at SlaAlertJob.checkSlaAlerts (C:\laragon\www\SistemaIncidencias\Backend\src\jobs\slaAlert.job.ts:35:51)
+    at Task._execution (C:\laragon\www\SistemaIncidencias\Backend\src\jobs\slaAlert.job.ts:384:18)
+    at Task.execute (C:\laragon\www\SistemaIncidencias\Backend\node_modules\node-cron\src\task.js:17:25)
+    at ScheduledTask.now (C:\laragon\www\SistemaIncidencias\Backend\node_modules\node-cron\src\scheduled-task.js:38:33)
+    at Scheduler.<anonymous> (C:\laragon\www\SistemaIncidencias\Backend\node_modules\node-cron\src\scheduled-task.js:25:18)
+    at Scheduler.emit (node:events:508:28)
+    at Scheduler.emit (node:domain:489:12)
+2025-11-04 11:28:13 [info]: 🔐 Intento de login: admin@we.com desde IP: ::1
+2025-11-04 11:28:13 [info]: ✅ Refresh token guardado para usuario: 1
+2025-11-04 11:28:13 [info]: ✅ Login exitoso: admin@we.com
+2025-11-04 12:00:00 [info]: 🔔 Iniciando verificación de SLA...
+2025-11-04 12:00:00 [error]: Error: Unknown column 'ss.fecha_primera_respuesta' in 'where clause'
+    at PromisePool.execute (C:\laragon\www\SistemaIncidencias\Backend\node_modules\mysql2\lib\promise\pool.js:54:22)
+    at SlaAlertJob.query (C:\laragon\www\SistemaIncidencias\Backend\src\repositories\base\BaseRepository.ts:29:22)
+    at SlaAlertJob.getTicketsProximosVencerRespuesta (C:\laragon\www\SistemaIncidencias\Backend\src\jobs\slaAlert.job.ts:77:34)
+    at SlaAlertJob.checkSlaAlerts (C:\laragon\www\SistemaIncidencias\Backend\src\jobs\slaAlert.job.ts:35:51)
+    at Task._execution (C:\laragon\www\SistemaIncidencias\Backend\src\jobs\slaAlert.job.ts:384:18)
+    at Task.execute (C:\laragon\www\SistemaIncidencias\Backend\node_modules\node-cron\src\task.js:17:25)
+    at ScheduledTask.now (C:\laragon\www\SistemaIncidencias\Backend\node_modules\node-cron\src\scheduled-task.js:38:33)
+    at Scheduler.<anonymous> (C:\laragon\www\SistemaIncidencias\Backend\node_modules\node-cron\src\scheduled-task.js:25:18)
+    at Scheduler.emit (node:events:508:28)
+    at Scheduler.emit (node:domain:489:12)
+2025-11-04 12:38:25 [info]: ✅ Middlewares inicializados
+2025-11-04 12:38:25 [info]: ✅ Rutas inicializadas
+2025-11-04 12:38:25 [info]: ✅ Manejo de errores configurado
+2025-11-04 12:38:25 [info]: 🚀 Iniciando jobs automáticos...
+2025-11-04 12:38:25 [info]: ✅ SLA Alert Job iniciado - Schedule: 0 * * * *
+2025-11-04 12:38:25 [info]: ✅ Metric Calculation Job iniciado - Schedule: 0 0 * * *
+2025-11-04 12:38:25 [info]: ✅ Todos los jobs iniciados correctamente
+2025-11-04 12:38:25 [info]: 🚀 Servidor corriendo en puerto 3000
+2025-11-04 12:38:25 [info]: 📝 Ambiente: development
+2025-11-04 12:38:25 [info]: 🔗 API: http://localhost:3000/api
+2025-11-04 12:38:25 [info]: ❤️  Health: http://localhost:3000/health
+2025-11-04 12:38:25 [info]: ⏰ Jobs automáticos: Activos
+2025-11-04 12:39:28 [info]: 🔐 Intento de login: admin@we.com desde IP: ::1
+2025-11-04 12:39:29 [info]: ✅ Refresh token guardado para usuario: 1
+2025-11-04 12:39:29 [info]: ✅ Login exitoso: admin@we.com
+2025-11-04 15:47:25 [info]: ✅ Middlewares inicializados
+2025-11-04 15:47:25 [info]: ✅ Rutas inicializadas
+2025-11-04 15:47:25 [info]: ✅ Manejo de errores configurado
+2025-11-04 15:47:25 [info]: 🚀 Iniciando jobs automáticos...
+2025-11-04 15:47:25 [info]: ✅ SLA Alert Job iniciado - Schedule: 0 * * * *
+2025-11-04 15:47:25 [info]: ✅ Metric Calculation Job iniciado - Schedule: 0 0 * * *
+2025-11-04 15:47:25 [info]: ✅ Todos los jobs iniciados correctamente
+2025-11-04 15:47:25 [info]: 🚀 Servidor corriendo en puerto 3000
+2025-11-04 15:47:25 [info]: 📝 Ambiente: development
+2025-11-04 15:47:25 [info]: 🔗 API: http://localhost:3000/api
+2025-11-04 15:47:25 [info]: ❤️  Health: http://localhost:3000/health
+2025-11-04 15:47:25 [info]: ⏰ Jobs automáticos: Activos
+2025-11-04 16:00:00 [info]: 🔔 Iniciando verificación de SLA...
+2025-11-04 16:00:01 [error]: Error: Unknown column 'a.slack_channel_id' in 'field list'
+    at PromisePool.execute (C:\laragon\www\SistemaIncidencias\Backend\node_modules\mysql2\lib\promise\pool.js:54:22)
+    at SlaAlertJob.query (C:\laragon\www\SistemaIncidencias\Backend\src\repositories\base\BaseRepository.ts:29:22)
+    at SlaAlertJob.getTicketsProximosVencerResolucion (C:\laragon\www\SistemaIncidencias\Backend\src\jobs\slaAlert.job.ts:103:34)
+    at SlaAlertJob.checkSlaAlerts (C:\laragon\www\SistemaIncidencias\Backend\src\jobs\slaAlert.job.ts:38:52)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Task._execution (C:\laragon\www\SistemaIncidencias\Backend\src\jobs\slaAlert.job.ts:363:7)
+2025-11-04 16:02:59 [info]: ✅ Middlewares inicializados
+2025-11-04 16:02:59 [info]: ✅ Rutas inicializadas
+2025-11-04 16:02:59 [info]: ✅ Manejo de errores configurado
+2025-11-04 16:02:59 [info]: 🚀 Iniciando jobs automáticos...
+2025-11-04 16:02:59 [info]: ✅ SLA Alert Job iniciado - Schedule: 0 * * * *
+2025-11-04 16:02:59 [info]: ✅ Metric Calculation Job iniciado - Schedule: 0 0 * * *
+2025-11-04 16:02:59 [info]: ✅ Todos los jobs iniciados correctamente
+2025-11-04 16:02:59 [info]: 🚀 Servidor corriendo en puerto 3000
+2025-11-04 16:02:59 [info]: 📝 Ambiente: development
+2025-11-04 16:02:59 [info]: 🔗 API: http://localhost:3000/api
+2025-11-04 16:02:59 [info]: ❤️  Health: http://localhost:3000/health
+2025-11-04 16:02:59 [info]: ⏰ Jobs automáticos: Activos
+2025-11-04 16:03:10 [info]: ✅ Middlewares inicializados
+2025-11-04 16:03:10 [info]: ✅ Rutas inicializadas
+2025-11-04 16:03:10 [info]: ✅ Manejo de errores configurado
+2025-11-04 16:03:10 [info]: 🚀 Iniciando jobs automáticos...
+2025-11-04 16:03:10 [info]: ✅ SLA Alert Job iniciado - Schedule: 0 * * * *
+2025-11-04 16:03:10 [info]: ✅ Metric Calculation Job iniciado - Schedule: 0 0 * * *
+2025-11-04 16:03:10 [info]: ✅ Todos los jobs iniciados correctamente
+2025-11-04 16:03:10 [info]: 🚀 Servidor corriendo en puerto 3000
+2025-11-04 16:03:10 [info]: 📝 Ambiente: development
+2025-11-04 16:03:10 [info]: 🔗 API: http://localhost:3000/api
+2025-11-04 16:03:10 [info]: ❤️  Health: http://localhost:3000/health
+2025-11-04 16:03:10 [info]: ⏰ Jobs automáticos: Activos
+2025-11-04 16:30:35 [error]: AppError: Token inválido
+2025-11-04 16:34:20 [info]: 🔐 Intento de login: admin@we.com desde IP: ::1
+2025-11-04 16:34:20 [info]: ✅ Refresh token guardado para usuario: 1
+2025-11-04 16:34:20 [info]: ✅ Login exitoso: admin@we.com
+2025-11-04 16:34:41 [error]: AppError: Token inválido
+2025-11-04 16:34:56 [info]: 🔐 Intento de login: admin@we.com desde IP: ::1
+2025-11-04 16:34:56 [info]: ✅ Refresh token guardado para usuario: 1
+2025-11-04 16:34:56 [info]: ✅ Login exitoso: admin@we.com
+2025-11-04 16:34:58 [error]: AppError: Token inválido
+2025-11-04 16:45:03 [info]: 🔐 Intento de login: admin@we.com desde IP: ::1
+2025-11-04 16:45:04 [info]: ✅ Refresh token guardado para usuario: 1
+2025-11-04 16:45:04 [info]: ✅ Login exitoso: admin@we.com
+2025-11-04 16:45:05 [info]: 📊 Obteniendo dashboard
+2025-11-04 16:50:05 [info]: 📊 Obteniendo dashboard
+2025-11-04 16:54:16 [info]: 🔐 Intento de login: admin@we.com desde IP: ::1
+2025-11-04 16:54:17 [info]: ✅ Refresh token guardado para usuario: 1
+2025-11-04 16:54:17 [info]: ✅ Login exitoso: admin@we.com
+2025-11-04 16:54:18 [info]: 📊 Obteniendo dashboard
+2025-11-04 16:59:18 [info]: 📊 Obteniendo dashboard
+2025-11-04 17:00:00 [info]: 🔔 Iniciando verificación de SLA...
+2025-11-04 17:00:00 [error]: Error: Unknown column 'ss.fecha_resolucion' in 'where clause'
+    at PromisePool.execute (C:\laragon\www\SistemaIncidencias\Backend\node_modules\mysql2\lib\promise\pool.js:54:22)
+    at SlaAlertJob.query (C:\laragon\www\SistemaIncidencias\Backend\src\repositories\base\BaseRepository.ts:29:22)
+    at SlaAlertJob.getTicketsProximosVencerResolucion (C:\laragon\www\SistemaIncidencias\Backend\src\jobs\slaAlert.job.ts:103:34)
+    at SlaAlertJob.checkSlaAlerts (C:\laragon\www\SistemaIncidencias\Backend\src\jobs\slaAlert.job.ts:38:52)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Task._execution (C:\laragon\www\SistemaIncidencias\Backend\src\jobs\slaAlert.job.ts:362:7)
+2025-11-04 17:04:18 [info]: 📊 Obteniendo dashboard
+2025-11-04 17:09:18 [info]: 📊 Obteniendo dashboard
+2025-11-04 17:14:18 [info]: 📊 Obteniendo dashboard
+2025-11-04 17:19:18 [info]: 📊 Obteniendo dashboard
+2025-11-04 17:24:18 [info]: 📊 Obteniendo dashboard
+2025-11-04 17:24:34 [info]: ✅ Middlewares inicializados
+2025-11-04 17:24:34 [info]: ✅ Rutas inicializadas
+2025-11-04 17:24:34 [info]: ✅ Manejo de errores configurado
+2025-11-04 17:24:34 [info]: 🚀 Iniciando jobs automáticos...
+2025-11-04 17:24:34 [info]: ✅ SLA Alert Job iniciado - Schedule: 0 * * * *
+2025-11-04 17:24:34 [info]: ✅ Metric Calculation Job iniciado - Schedule: 0 0 * * *
+2025-11-04 17:24:34 [info]: ✅ Todos los jobs iniciados correctamente
+2025-11-04 17:24:34 [info]: 🚀 Servidor corriendo en puerto 3000
+2025-11-04 17:24:34 [info]: 📝 Ambiente: development
+2025-11-04 17:24:34 [info]: 🔗 API: http://localhost:3000/api
+2025-11-04 17:24:34 [info]: ❤️  Health: http://localhost:3000/health
+2025-11-04 17:24:34 [info]: ⏰ Jobs automáticos: Activos
+2025-11-04 17:29:18 [info]: 📊 Obteniendo dashboard
+2025-11-04 17:34:18 [info]: 📊 Obteniendo dashboard
+2025-11-04 17:39:18 [info]: 📊 Obteniendo dashboard
+2025-11-04 17:44:18 [info]: 📊 Obteniendo dashboard
+2025-11-04 17:44:23 [info]: 📊 Obteniendo dashboard
+2025-11-04 17:44:24 [info]: 📊 Obteniendo dashboard
+2025-11-04 17:46:01 [info]: 📊 Obteniendo dashboard
+2025-11-04 17:46:03 [info]: 📊 Obteniendo dashboard
+2025-11-04 17:46:04 [info]: 📊 Obteniendo dashboard
+2025-11-04 17:48:55 [info]: 📊 Obteniendo dashboard
+2025-11-04 17:53:55 [info]: 📊 Obteniendo dashboard
+2025-11-04 17:58:52 [info]: 📊 Obteniendo dashboard
+2025-11-04 18:00:00 [info]: 🔔 Iniciando verificación de SLA...
+2025-11-04 18:00:00 [error]: Error: Unknown column 'a.slack_channel_id' in 'field list'
+    at PromisePool.execute (C:\laragon\www\SistemaIncidencias\Backend\node_modules\mysql2\lib\promise\pool.js:54:22)
+    at SlaAlertJob.query (C:\laragon\www\SistemaIncidencias\Backend\src\repositories\base\BaseRepository.ts:29:22)
+    at SlaAlertJob.getTicketsVencidos (C:\laragon\www\SistemaIncidencias\Backend\src\jobs\slaAlert.job.ts:150:34)
+    at SlaAlertJob.checkSlaAlerts (C:\laragon\www\SistemaIncidencias\Backend\src\jobs\slaAlert.job.ts:41:42)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Task._execution (C:\laragon\www\SistemaIncidencias\Backend\src\jobs\slaAlert.job.ts:362:7)
+2025-11-04 18:04:32 [info]: ✅ Middlewares inicializados
+2025-11-04 18:04:32 [info]: ✅ Rutas inicializadas
+2025-11-04 18:04:32 [info]: ✅ Manejo de errores configurado
+2025-11-04 18:04:32 [info]: 🚀 Iniciando jobs automáticos...
+2025-11-04 18:04:32 [info]: ✅ SLA Alert Job iniciado - Schedule: 0 * * * *
+2025-11-04 18:04:32 [info]: ✅ Metric Calculation Job iniciado - Schedule: 0 0 * * *
+2025-11-04 18:04:32 [info]: ✅ Todos los jobs iniciados correctamente
+2025-11-04 18:04:32 [info]: 🚀 Servidor corriendo en puerto 3000
+2025-11-04 18:04:32 [info]: 📝 Ambiente: development
+2025-11-04 18:04:32 [info]: 🔗 API: http://localhost:3000/api
+2025-11-04 18:04:32 [info]: ❤️  Health: http://localhost:3000/health
+2025-11-04 18:04:32 [info]: ⏰ Jobs automáticos: Activos
+2025-11-04 18:06:29 [info]: 🔐 Intento de login: admin@we.com desde IP: ::1
+2025-11-04 18:06:30 [info]: ✅ Refresh token guardado para usuario: 1
+2025-11-04 18:06:30 [info]: ✅ Login exitoso: admin@we.com
+2025-11-04 18:06:31 [info]: 📊 Obteniendo dashboard
+2025-11-04 18:11:31 [info]: 📊 Obteniendo dashboard
+2025-11-04 18:16:31 [info]: 📊 Obteniendo dashboard
+2025-11-04 18:21:31 [info]: 📊 Obteniendo dashboard
+2025-11-04 18:26:31 [info]: 📊 Obteniendo dashboard
+2025-11-04 18:31:31 [info]: 📊 Obteniendo dashboard
+2025-11-04 18:36:31 [info]: 📊 Obteniendo dashboard
+2025-11-04 18:41:31 [info]: 📊 Obteniendo dashboard
+2025-11-04 18:46:31 [info]: 📊 Obteniendo dashboard
+2025-11-05 19:05:48 [info]: ✅ Middlewares inicializados
+2025-11-05 19:05:48 [info]: ✅ Rutas inicializadas
+2025-11-05 19:05:48 [info]: ✅ Manejo de errores configurado
+2025-11-05 19:05:48 [info]: 🚀 Iniciando jobs automáticos...
+2025-11-05 19:05:48 [info]: ✅ SLA Alert Job iniciado - Schedule: 0 * * * *
+2025-11-05 19:05:48 [info]: ✅ Metric Calculation Job iniciado - Schedule: 0 0 * * *
+2025-11-05 19:05:48 [info]: ✅ Todos los jobs iniciados correctamente
+2025-11-05 19:05:48 [info]: 🚀 Servidor corriendo en puerto 3000
+2025-11-05 19:05:48 [info]: 📝 Ambiente: development
+2025-11-05 19:05:48 [info]: 🔗 API: http://localhost:3000/api
+2025-11-05 19:05:48 [info]: ❤️  Health: http://localhost:3000/health
+2025-11-05 19:05:48 [info]: ⏰ Jobs automáticos: Activos
+2025-11-05 19:06:00 [error]: AppError: Token inválido
+2025-11-05 19:08:09 [info]: 🔐 Intento de login: admin@we.com desde IP: ::1
+2025-11-05 19:08:10 [info]: ✅ Refresh token guardado para usuario: 1
+2025-11-05 19:08:10 [info]: ✅ Login exitoso: admin@we.com
+2025-11-05 19:08:11 [info]: 📊 Obteniendo dashboard
+2025-11-06 08:19:36 [info]: ✅ Middlewares inicializados
+2025-11-06 08:19:36 [info]: ✅ Rutas inicializadas
+2025-11-06 08:19:36 [info]: ✅ Manejo de errores configurado
+2025-11-06 08:19:36 [info]: 🚀 Iniciando jobs automáticos...
+2025-11-06 08:19:36 [info]: ✅ SLA Alert Job iniciado - Schedule: 0 * * * *
+2025-11-06 08:19:36 [info]: ✅ Metric Calculation Job iniciado - Schedule: 0 0 * * *
+2025-11-06 08:19:36 [info]: ✅ Todos los jobs iniciados correctamente
+2025-11-06 08:19:36 [info]: 🚀 Servidor corriendo en puerto 3000
+2025-11-06 08:19:36 [info]: 📝 Ambiente: development
+2025-11-06 08:19:36 [info]: 🔗 API: http://localhost:3000/api
+2025-11-06 08:19:36 [info]: ❤️  Health: http://localhost:3000/health
+2025-11-06 08:19:36 [info]: ⏰ Jobs automáticos: Activos

@@ -156,6 +156,9 @@ class AuthController {
                 next(error);
             }
         };
+        // Alias para compatibilidad con rutas
+        this.refreshToken = this.refresh;
+        this.getMe = this.getProfile;
         this.authService = new AuthService_1.AuthService();
     }
 }

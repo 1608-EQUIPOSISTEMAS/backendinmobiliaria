@@ -7,17 +7,21 @@ const app_1 = __importDefault(require("./app"));
 const environment_config_1 = require("@config/environment.config");
 const database_config_1 = require("@config/database.config");
 const logger_util_1 = require("@utils/logger.util");
+const index_1 = require("@jobs/index");
 const PORT = environment_config_1.config.server.port;
 async function startServer() {
     try {
         // Inicializar base de datos
         await (0, database_config_1.initializeDatabase)();
+        // Iniciar jobs
+        (0, index_1.startJobs)();
         // Iniciar servidor
         app_1.default.listen(PORT, () => {
             logger_util_1.logger.info(`🚀 Servidor corriendo en puerto ${PORT}`);
             logger_util_1.logger.info(`📝 Ambiente: ${environment_config_1.config.server.env}`);
             logger_util_1.logger.info(`🔗 API: http://localhost:${PORT}/api`);
             logger_util_1.logger.info(`❤️  Health: http://localhost:${PORT}/health`);
+            logger_util_1.logger.info(`⏰ Jobs automáticos: Activos`);
         });
     }
     catch (error) {

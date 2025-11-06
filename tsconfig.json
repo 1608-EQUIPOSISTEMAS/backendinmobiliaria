@@ -30,7 +30,8 @@
       "@middleware/*": ["middleware/*"],
       "@validators/*": ["validators/*"],
       "@utils/*": ["utils/*"],
-      "@types/*": ["types/*"]
+      "@types/*": ["types/*"],
+      "@jobs/*": ["jobs/*"]
     }
   },
   "include": ["src/**/*"],

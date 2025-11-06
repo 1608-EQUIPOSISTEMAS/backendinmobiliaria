@@ -1,7 +1,8 @@
-export declare const slackClient: any;
+import { WebClient } from '@slack/web-api';
+export declare const slackClient: WebClient;
 export declare const slackConfig: {
     enabled: boolean;
-    channelSupport: any;
-    signingSecret: any;
+    channelSupport: string;
+    signingSecret: string;
 };
 //# sourceMappingURL=slack.config.d.ts.map

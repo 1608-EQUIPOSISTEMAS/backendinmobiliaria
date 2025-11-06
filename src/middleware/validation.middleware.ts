@@ -42,7 +42,7 @@ export class ValidationMiddleware {
             value: error.type === 'field' ? (error as any).value : undefined,
           }));
 
-          logger.warn('Errores de validación:', errorMessages);
+        console.log('🔍 Detalle de errores:', JSON.stringify(errorMessages, null, 2));
 
           throw new AppError('Errores de validación', 400, errorMessages as any);
         }

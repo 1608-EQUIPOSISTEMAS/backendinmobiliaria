@@ -1,5 +1,5 @@
 export declare const jwtConfig: {
-    secret: any;
+    secret: string;
     expiresIn: string | number;
     refreshExpiresIn: string | number;
     algorithm: "HS256";
